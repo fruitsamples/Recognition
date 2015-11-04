@@ -42,11 +42,12 @@
 	CocoaSpeechAppleEvents.m
 	ExpensePad
 	
-	Copyright (c) 2000-2005 Apple Computer. All rights reserved.
+	Copyright (c) 2000-2007 Apple Inc. All rights reserved.
 
 ************************************************************/
 
 #import "CocoaSpeechAppleEvents.h"
+#import <ApplicationServices/ApplicationServices.h>
 
 static SRRecognitionSystem	sRecSystem;
 
@@ -63,7 +64,7 @@ static void ProcessResult (OSErr origStatus, SRRecognitionResult recResult)
 		if (!status) {
 			status = SRGetIndexedItem (resultLM, &subLM, 0);
 			if (!status) {
-				len = 4;
+				len = sizeof(long);
 				status = SRGetProperty (subLM, kSRRefCon, &refCon, &len);
 				if (!status) {
 					[(Utterance *)refCon perform];
@@ -90,13 +91,11 @@ pascal OSErr HandleSpeechDoneAppleEvent (const AppleEvent *theAEevt, AppleEvent*
 	SRRecognitionResult	recResult = 0;
 	
 		/* Get status */
-	status = AEGetParamPtr(theAEevt,keySRSpeechStatus,typeShortInteger,
-					&actualType, (Ptr)&recStatus, sizeof(status), &actualSize);
+	status = AEGetParamPtr(theAEevt, keySRSpeechStatus, typeSInt16, &actualType, (Ptr)&recStatus, sizeof(status), &actualSize);
 
 		/* Get result */
 	if (!status && !recStatus)
-		status = AEGetParamPtr(theAEevt,keySRSpeechResult,typeSRSpeechResult,
-					&actualType, (Ptr)&recResult, sizeof(SRRecognitionResult), &actualSize);
+		status = AEGetParamPtr(theAEevt, keySRSpeechResult, typeSRSpeechResult, &actualType, (Ptr)&recResult, sizeof(SRRecognitionResult), &actualSize);
 					
 		/* Process result */
 	if (!status)

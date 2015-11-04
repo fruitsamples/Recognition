@@ -1,5 +1,5 @@
 /*
- IMPORTANT: This Apple software is supplied to you by Apple Computer,
+ IMPORTANT:This Apple software is supplied to you by Apple Computer,
  Inc. ("Apple") in consideration of your agreement to the following terms,
  and your use, installation, modification or redistribution of this Apple
  software constitutes acceptance of these terms.  If you do not agree with
@@ -41,7 +41,7 @@
 	RejectableController.m
 	NewRejectableModel
 	
-	2001-2005 (c) 2001-2005 Apple Computer. All rights reserved.
+	(c) 2001-2007 Apple Inc. All rights reserved.
 */
 
 #import "RejectableController.h"
@@ -60,23 +60,23 @@
 	//  tell the listener about the current rejectable setting
 	buttonState = [_rejectableOnButton state];
 	if (buttonState) 
-		[_theListener setRejectable: TRUE];
+		[_theListener setRejectable:TRUE];
 	else
-		[_theListener setRejectable: FALSE];
+		[_theListener setRejectable:FALSE];
 	//  initialize the recognition stuff for the listener object
 	[_theListener initSR];
 }
 
 // ------------------------------------------------------
 //  setters for the rejectableProperty on the listener object
-- (IBAction)setRejectableOn: (id)sender
+- (IBAction)setRejectableOn:(id)sender
 {
-	[_theListener setRejectable: TRUE];
+	[_theListener setRejectable:TRUE];
 }
 
-- (IBAction)setRejectableOff: (id)sender
+- (IBAction)setRejectableOff:(id)sender
 {
-	[_theListener setRejectable: FALSE];
+	[_theListener setRejectable:FALSE];
 }
 
 // ------------------------------------------------------
@@ -84,7 +84,7 @@
 {
 	NSString*	theDisplayString;
 
-	theDisplayString = [[NSString alloc] initWithFormat: @"%s", theText];
-	[_recognitionTextView setStringValue: theDisplayString];
+	theDisplayString = [[NSString alloc] initWithFormat:@"%s", theText];
+	[_recognitionTextView setStringValue:theDisplayString];
 }
 @end

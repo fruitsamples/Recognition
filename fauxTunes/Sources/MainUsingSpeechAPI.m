@@ -41,7 +41,7 @@
 	MainUsingSpeechAPI
 	fauxTunes
 	
-	Copyright (c) 2001-2005 Apple Computer, Inc. All rights reserved.
+	Copyright (c) 2001-2007 Apple Inc. All rights reserved.
 */
 
 #import <Cocoa/Cocoa.h>
@@ -92,8 +92,13 @@ NSString *				gCommandNameTable[100];
     //
     // Register Speech Done Apple event handler routine.
     //
-	if (AEInstallEventHandler( kAESpeechSuite, kAESpeechDone, NewAEEventHandlerUPP(HandleSpeechDoneAppleEvent), (SInt32)_fauxTunes, false) == noErr) {
-
+	
+// Conditionalized just to remove compiler warnings.
+#if __LP64__
+	if (AEInstallEventHandler( kAESpeechSuite, kAESpeechDone, NewAEEventHandlerUPP(HandleSpeechDoneAppleEvent), _fauxTunes, false) == noErr) {
+#else
+	if (AEInstallEventHandler( kAESpeechSuite, kAESpeechDone, NewAEEventHandlerUPP(HandleSpeechDoneAppleEvent), (long)_fauxTunes, false) == noErr) {
+#endif
         //
         // Instaniate and intialize our speech recognition objects.
         //
@@ -135,7 +140,7 @@ NSString *				gCommandNameTable[100];
 */
 pascal OSErr HandleSpeechDoneAppleEvent( const AppleEvent *theAEevt, AppleEvent* reply, long refcon)
 {
-    UInt32 	theCommandID;
+    long 	theCommandID;
     
     if (ConvertAppleEventResultIntoCommandID( theAEevt, &theCommandID ))
         [(FauxTunes *)refcon performSelector:gMethodSelectorTable[theCommandID] withObject:NULL];

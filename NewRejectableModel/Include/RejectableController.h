@@ -41,7 +41,7 @@
 	RejectableController.h
 	NewRejectableModel
 	
-	2001-2005 (c) 2001-2005 Apple Computer. All rights reserved.
+	(c) 2001-2007 Apple Inc. All rights reserved.
 */
 
 #import <Cocoa/Cocoa.h>

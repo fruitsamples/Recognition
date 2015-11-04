@@ -40,7 +40,7 @@
 
 	SpeechRoutines.c
 	
-	Copyright (c) 2001-2005 Apple Computer, Inc. All rights reserved.
+	Copyright (c) 2001-2007 Apple Inc. All rights reserved.
 */
 
 
@@ -140,8 +140,12 @@ Boolean AddCommands( SRRecognizer inSpeechRecognizer, SRLanguageModel inCommands
                  CFStringRef	theCommandName = CFArrayGetValueAtIndex(inCommandNamesArray, i);
                 if (theCommandName && CFStringGetCString( theCommandName, theCSringBuffer, 100, kCFStringEncodingMacRoman )) {
                     
+// Conditionalized just to remove compiler warnings.
+#if __LP64__
+                    if (SRAddText( inCommandsLangaugeModel, theCSringBuffer, strlen(theCSringBuffer), (void *)i) == noErr) {
+#else
                     if (SRAddText( inCommandsLangaugeModel, theCSringBuffer, strlen(theCSringBuffer), i) == noErr) {
-    
+#endif    
                         CFStringRef 	keys[1];
                         CFTypeRef		values[1];
                         CFDictionaryRef theItemDict;
@@ -242,22 +246,22 @@ Boolean AddCommands( SRRecognizer inSpeechRecognizer, SRLanguageModel inCommands
     This routine returns true if the spoken utterance was recognized as a valid command.
 */
 
-Boolean ConvertAppleEventResultIntoCommandID( const AppleEvent *inAppleEvent, UInt32 * outCommandID )
+Boolean ConvertAppleEventResultIntoCommandID( const AppleEvent *inAppleEvent, long * outCommandID )
 {
     Boolean			successfullyFound = false;
-    SInt32			actualSize;
+    Size			actualSize;
     DescType		actualType;
     OSErr			recStatus = noErr;
     
     //	Get recognition status from AE, and check that it is equal to 0.
-    if (AEGetParamPtr( inAppleEvent, keySRSpeechStatus, typeShortInteger, &actualType, (Ptr)&recStatus, sizeof(recStatus), &actualSize) == noErr && recStatus == noErr) {
+    if (AEGetParamPtr( inAppleEvent, keySRSpeechStatus, typeSInt16, &actualType, (Ptr)&recStatus, sizeof(recStatus), &actualSize) == noErr && recStatus == noErr) {
     
         // Get recognition result from AE, and continue if not NULL.
         SRRecognitionResult recResult = NULL;
         if (AEGetParamPtr( inAppleEvent, keySRSpeechResult, typeSRSpeechResult, &actualType, (Ptr)&recResult, sizeof(recResult), &actualSize) == noErr && recResult) {
     
             // Get language model result from recognition result
-            SInt32 				theLen = sizeof(SRLanguageModel);
+            Size				theLen = sizeof(SRLanguageModel);
             SRLanguageModel		resultLanguageModel	= 0;  
             if (SRGetProperty( recResult, kSRLanguageModelFormat, &resultLanguageModel, &theLen ) == noErr) {
             
@@ -267,7 +271,7 @@ Boolean ConvertAppleEventResultIntoCommandID( const AppleEvent *inAppleEvent, UI
                 if (SRGetIndexedItem( resultLanguageModel, &resultingCommandObj, 0 ) == noErr) {
                 
                     // Get the command ID from the refCon property of the recognized command object.
-                    theLen = sizeof(UInt32);
+                    theLen = sizeof(long);
                     if (SRGetProperty( resultingCommandObj, kSRRefCon, outCommandID, &theLen ) == noErr)
                         successfullyFound = true;
                 }

@@ -40,14 +40,15 @@
 
 	InstallSpeakableItems.c
 	
-	Copyright (c) 2001-2005 Apple Computer, Inc. All rights reserved.
+	Copyright (c) 2001-2007 Apple Inc. All rights reserved.
 */
 
 #include <Carbon/Carbon.h>
 
 // Prototypes
-OSErr NewAliasFile( SInt16 inVRefNum, SInt32 inDirID, ConstStr31Param inFileName, OSType inFileType, OSType inFileCreator, FSSpec* inTargetFileSpec, Boolean inReplaceIfExists, Boolean inMakeInvisible );
-void InstallSpeakableItemsFolderContents( const FSRef * inSourceFolderFSRef, const FSRef * inTargetFolderFSRef, OSType inFileType, OSType inFileCreator, Boolean inRsrcForkInDataFork );
+OSErr NewAliasFile(FSRef * inParentContainerFSRef, CFStringRef inAliasFileName, FSRef * inTargetFileFSRef, Boolean inReplaceIfExists, Boolean inMakeInvisible, FSRef * outAliasFileFSRef);
+
+void InstallSpeakableItemsFolderContents(const FSRef * inSourceFolderFSRef, const FSRef * inTargetFolderFSRef, OSType inFileType, OSType inFileCreator, Boolean inRsrcForkInDataFork);
 
 
 /*
@@ -66,108 +67,79 @@ void InstallSpeakableItemsFolderContents( const FSRef * inSourceFolderFSRef, con
     this routine during every launch to create the folder if necessary, or call only when the user indicates that
     they want the spoken command feature enabled
     
-	When using Project Builder, the Command and AppleScript data files are added to the project and specified to be
+	When using XCode, the Command and AppleScript data files are added to the project and specified to be
     copied (using a Copy File Build Phase) into separate folders inside the "Resources" folder.  Since AppleScript 
     files have resource forks, the resource fork must be moved to the data fork before adding the file to the project.  
     This routine then recreates the AppleScript resource fork using the data in the data fork.
     
 */
 
-Boolean InstallSpeakableItemsForThisApplication( CFStringRef inCommandFilesResourcePath, CFStringRef inCompliedASDataFilesResourcePath, Boolean inForceReinstallation )
+Boolean InstallSpeakableItemsForThisApplication(CFStringRef inCommandFilesResourcePath, CFStringRef inCompliedASDataFilesResourcePath, Boolean inForceReinstallation)
 {
-    #define kInvisibleFileName	"\pTarget Application Alias\r"
-	#define	kInvisibleFileType	'adrp'
+    #define kInvisibleFileName	CFSTR("Target Application Alias\r")
 
 	Boolean					successfullyCreated		= false;
     CFURLRef				theSIAppDirCFURLRef		= NULL;
     CFURLRef				thisAppsSIDirCFURLRef	= NULL;
     CFStringRef				thisAppsDisplayName		= NULL;
-    FSSpec					thisAppsFSSpec;
-    ProcessSerialNumber		thisAppsPSN;
-    Str255					thisAppsName;
-    FSSpec           		thisAppsSIDirFSSpec;
-    UInt32	         		thisAppsSIDirID;
-    ProcessInfoRec 			thisAppsProcessInfoRec;
-    FSRef					theSIAppDirFSRef;
-    FSRef					thisAppsSIDirFSRef;
+    ProcessSerialNumber		thisAppsPSN = {kNoProcess, kNoProcess};
 
-    GetCurrentProcess( &thisAppsPSN );
+    GetCurrentProcess(&thisAppsPSN);
 
     // Grab info about this process
-    thisAppsProcessInfoRec.processNumber.highLongOfPSN 	= 0;
-    thisAppsProcessInfoRec.processNumber.lowLongOfPSN 	= kNoProcess;
-    thisAppsProcessInfoRec.processInfoLength 			= sizeof(ProcessInfoRec);
-    thisAppsProcessInfoRec.processName 					= thisAppsName;
-    thisAppsProcessInfoRec.processAppSpec 				= &thisAppsFSSpec;
-    if (GetProcessInformation( &thisAppsPSN, &thisAppsProcessInfoRec) == noErr) {
+	CFDictionaryRef processDictionary = ProcessInformationCopyDictionary(&thisAppsPSN, kProcessDictionaryIncludeAllInformationMask);
+    if (processDictionary) {
         
-        thisAppsDisplayName = CFStringCreateWithPascalString( NULL, thisAppsProcessInfoRec.processName, kCFStringEncodingMacRoman );
-        if (thisAppsDisplayName) {
+        if (CopyProcessName(&thisAppsPSN, &thisAppsDisplayName) == noErr && thisAppsDisplayName) {
 
             // Get the user's library folder.
 			FSRef userLibraryFolderFSRef;
-			if (FSFindFolder( kUserDomain, kDomainLibraryFolderType, true, &userLibraryFolderFSRef ) == noErr) {
+			if (FSFindFolder(kUserDomain, kDomainLibraryFolderType, true, &userLibraryFolderFSRef) == noErr) {
 			
-				CFURLRef userLibraryFolderCFURL = CFURLCreateFromFSRef( kCFAllocatorDefault, (const struct FSRef *)&userLibraryFolderFSRef );
+				CFURLRef userLibraryFolderCFURL = CFURLCreateFromFSRef(kCFAllocatorDefault, (const struct FSRef *)&userLibraryFolderFSRef);
 				if (userLibraryFolderCFURL) {
 				
-                    CFStringRef	theDirPath = CFURLCopyPath( userLibraryFolderCFURL );
-                    if (theDirPath) {
-            
-                        // Append the path to this application's Speakable Items folder
-                        CFMutableStringRef theDirectoryPathStr = CFStringCreateMutable( NULL, 0 );
-                    
-                        if (theDirectoryPathStr) {
-                            CFStringAppend( theDirectoryPathStr, theDirPath );
-                            CFStringAppend( theDirectoryPathStr, CFSTR( "/Speech/Speakable Items/Application Speakable Items/" ) );
-                            theSIAppDirCFURLRef = CFURLCreateWithFileSystemPath( NULL, theDirectoryPathStr, kCFURLPOSIXPathStyle, true );
-        
-                            CFStringAppend( theDirectoryPathStr, thisAppsDisplayName );
-                            CFStringAppend( theDirectoryPathStr, CFSTR( "/" ) );
-                            thisAppsSIDirCFURLRef = CFURLCreateWithFileSystemPath( NULL, theDirectoryPathStr, kCFURLPOSIXPathStyle, true );
-        
-                            CFRelease( theDirectoryPathStr );
-                        }
-        
-                        CFRelease( theDirPath );
-                    }
+					theSIAppDirCFURLRef = CFURLCreateCopyAppendingPathComponent(NULL, userLibraryFolderCFURL, CFSTR("/Speech/Speakable Items/Application Speakable Items/"), true);
+					thisAppsSIDirCFURLRef = CFURLCreateCopyAppendingPathComponent(NULL, theSIAppDirCFURLRef, thisAppsDisplayName, true);
 					
-					CFRelease( userLibraryFolderCFURL );
+					CFRelease(userLibraryFolderCFURL);
                 }
             }
         }
+		CFRelease(processDictionary);
     }
     
     // If we found the user's "Application Speakable Items" folder, then look for this app's folder 
-    if (theSIAppDirCFURLRef && thisAppsSIDirCFURLRef && CFURLGetFSRef( theSIAppDirCFURLRef, &theSIAppDirFSRef )) {
+    FSRef theSIAppDirFSRef;
+    FSRef thisAppsSIDirFSRef;
+    if (theSIAppDirCFURLRef && thisAppsSIDirCFURLRef && CFURLGetFSRef(theSIAppDirCFURLRef, &theSIAppDirFSRef)) {
     
         // We'll create a new folder for our application's spekable items if it doesn't already exist.
         // NOTE:  If the "Speakable Items" folder hasn't be created, then the user hasn't run SI yet so there's no need to create our folder yet.
-        if (! CFURLGetFSRef( thisAppsSIDirCFURLRef, &thisAppsSIDirFSRef )) {
+        if (! CFURLGetFSRef(thisAppsSIDirCFURLRef, &thisAppsSIDirFSRef)) {
     
             const CFIndex		maxNameLen = 300;
             UniChar				appNameAsUniChar[maxNameLen];
             UniCharCount      	appNameLength;
 
-            appNameLength = CFStringGetLength( thisAppsDisplayName );
+            appNameLength = CFStringGetLength(thisAppsDisplayName);
             if (appNameLength > maxNameLen)
                 appNameLength = maxNameLen;
                 
-            CFStringGetCharacters( thisAppsDisplayName, CFRangeMake(0, appNameLength), appNameAsUniChar ); 
+            CFStringGetCharacters(thisAppsDisplayName, CFRangeMake(0, appNameLength), appNameAsUniChar); 
         
             // Create the Directory
-            if (FSCreateDirectoryUnicode( &theSIAppDirFSRef, appNameLength, appNameAsUniChar, 0, NULL, &thisAppsSIDirFSRef, &thisAppsSIDirFSSpec, &thisAppsSIDirID ) == noErr) {
-
-                FSRef	bundleLocationFSRef;
+            if (FSCreateDirectoryUnicode(&theSIAppDirFSRef, appNameLength, appNameAsUniChar, 0, NULL, &thisAppsSIDirFSRef, NULL, NULL) == noErr) {
         
                 // Since GetProcessInformation returns the actual executable of bundled applications, we must use
                 // GetProcessBundleLocation to get the application bundle FSSpec.
-                if (GetProcessBundleLocation( &thisAppsPSN, &bundleLocationFSRef) == noErr)
-                    FSGetCatalogInfo( &bundleLocationFSRef, kFSCatInfoNone, NULL, NULL, &thisAppsFSSpec, NULL);
                 
                 // Create the invisible alias file
-                if (NewAliasFile( thisAppsSIDirFSSpec.vRefNum, thisAppsSIDirID, kInvisibleFileName, kInvisibleFileType, thisAppsProcessInfoRec.processSignature, &thisAppsFSSpec, true, true ) == noErr)
+                FSRef	bundleLocationFSRef;
+                if (GetProcessBundleLocation(&thisAppsPSN, &bundleLocationFSRef) == noErr
+					&& NewAliasFile(&thisAppsSIDirFSRef, kInvisibleFileName, &bundleLocationFSRef, true, true, NULL) == noErr) {
                     successfullyCreated = true;
+				}
             }
             else if (inForceReinstallation) {
                 successfullyCreated = true;
@@ -178,9 +150,18 @@ Boolean InstallSpeakableItemsForThisApplication( CFStringRef inCommandFilesResou
 			// You can optimize this if you look in the folder first before deciding the install the commands.
 			successfullyCreated = true;
 		}
-    }            
-    
-    
+    } 
+	
+	if (thisAppsDisplayName) {
+		CFRelease(thisAppsDisplayName);
+	}
+	if (theSIAppDirCFURLRef) {
+		CFRelease(theSIAppDirCFURLRef);
+	}
+	if (thisAppsSIDirCFURLRef) {
+		CFRelease(thisAppsSIDirCFURLRef);
+	}
+   
     if (successfullyCreated) {
     
         FSRef 		sourceFolderFSRef;
@@ -188,27 +169,31 @@ Boolean InstallSpeakableItemsForThisApplication( CFStringRef inCommandFilesResou
         FSCatalogInfo  catalogInfo;
 
         // Install Command Files
-        sourceCFURLRef = CFBundleCopyResourceURL( CFBundleGetMainBundle(), inCommandFilesResourcePath, NULL, NULL );
+        sourceCFURLRef = CFBundleCopyResourceURL(CFBundleGetMainBundle(), inCommandFilesResourcePath, NULL, NULL);
         if (sourceCFURLRef) {
-            if (CFURLGetFSRef( sourceCFURLRef, &sourceFolderFSRef ))
-                InstallSpeakableItemsFolderContents( &sourceFolderFSRef, &thisAppsSIDirFSRef, 'sicf', 'siax', false );
-            
-            CFRelease( sourceCFURLRef );
+            if (CFURLGetFSRef(sourceCFURLRef, &sourceFolderFSRef)) {
+                InstallSpeakableItemsFolderContents(&sourceFolderFSRef, &thisAppsSIDirFSRef, 'sicf', 'siax', false);
+            }
+            CFRelease(sourceCFURLRef);
         }
     
         // Install AppleScript Files
-        sourceCFURLRef = CFBundleCopyResourceURL( CFBundleGetMainBundle(), inCompliedASDataFilesResourcePath, NULL, NULL );
+        sourceCFURLRef = CFBundleCopyResourceURL(CFBundleGetMainBundle(), inCompliedASDataFilesResourcePath, NULL, NULL);
         if (sourceCFURLRef) {
-            if (CFURLGetFSRef( sourceCFURLRef, &sourceFolderFSRef ))
-                InstallSpeakableItemsFolderContents( &sourceFolderFSRef, &thisAppsSIDirFSRef, 'osas', 'ToyS', true );
-            
-            CFRelease( sourceCFURLRef );
+            if (CFURLGetFSRef(sourceCFURLRef, &sourceFolderFSRef)) {
+                InstallSpeakableItemsFolderContents(&sourceFolderFSRef, &thisAppsSIDirFSRef, 'osas', 'ToyS', true);
+            }
+            CFRelease(sourceCFURLRef);
         }
         
         // Touch the mod date of the application's folder so Speakable Item will update itself.
-        if (GetUTCDateTime( &(catalogInfo.contentModDate), 0 ) == noErr)
-            FSSetCatalogInfo( &thisAppsSIDirFSRef, kFSCatInfoContentMod, &catalogInfo);
-
+		CFTimeZoneRef systemTimeZone = CFTimeZoneCopySystem();
+		if (systemTimeZone) {
+			if (UCConvertCFAbsoluteTimeToUTCDateTime(CFTimeZoneGetSecondsFromGMT(systemTimeZone, CFAbsoluteTimeGetCurrent()), &(catalogInfo.contentModDate)) == noErr) {
+				FSSetCatalogInfo(&thisAppsSIDirFSRef, kFSCatInfoContentMod, &catalogInfo);
+			}
+			CFRelease(systemTimeZone);
+		}
     }
     
 	return successfullyCreated;
@@ -221,62 +206,78 @@ Boolean InstallSpeakableItemsForThisApplication( CFStringRef inCommandFilesResou
     A utility routine used by InstallSpeakableItemsForThisApplication to create an alias file.
 */
     
-OSErr NewAliasFile( SInt16 inVRefNum, SInt32 inDirID, ConstStr31Param inFileName, OSType inFileType, OSType inFileCreator, FSSpec* inTargetFileSpec, Boolean inReplaceIfExists, Boolean inMakeInvisible )
+OSErr NewAliasFile(FSRef * inParentContainerFSRef, CFStringRef inAliasFileName, FSRef * inTargetFileFSRef, Boolean inReplaceIfExists, Boolean inMakeInvisible, FSRef * outAliasFileFSRef)
 {
-	OSErr			theErr	= noErr;
-    SInt16			savedResFile;
-    CInfoPBRec		filePB;
-	FSSpec			theAliasFile;
-    
-	theAliasFile.vRefNum	= inVRefNum;
-	theAliasFile.parID	= inDirID;
-	PLstrcpy( theAliasFile.name, inFileName );		
+	OSErr		theErr	= noErr;
+
+	FSRef		theAliasFileFSRef;
 	
-	savedResFile = CurResFile();
-	FSpCreateResFile( &theAliasFile, inFileCreator, inFileType, smSystemScript );
+	FSIORefNum	savedResFile = CurResFile();
+
+
+    const UniCharCount		maxNameLen = 300;
+
+    UniChar				aliasFileNameAsUniChar[maxNameLen];
+    UniCharCount      	aliasFileNameLength;
+
+    // Convert name to unicode
+    aliasFileNameLength = CFStringGetLength(inAliasFileName);
+    if (aliasFileNameLength > maxNameLen)
+        aliasFileNameLength = maxNameLen;
+        
+    CFStringGetCharacters(inAliasFileName, CFRangeMake(0, aliasFileNameLength), aliasFileNameAsUniChar); 
+    
+    // If we're allowed to replace an existing copy, delete the existing one first
+    // Otherwise, the FSCreateFile will fail below and we'll skip adding the resource.
+    if (inReplaceIfExists && FSMakeFSRefUnicode(inParentContainerFSRef, aliasFileNameLength, aliasFileNameAsUniChar, 0, &theAliasFileFSRef) == noErr)
+        FSDeleteObject(&theAliasFileFSRef);
+    
+    // Create the file.
+    FSCreateResFile(inParentContainerFSRef, aliasFileNameLength, aliasFileNameAsUniChar, 0, NULL, &theAliasFileFSRef, NULL);
 	theErr = ResError();
-	
-	if(! theErr) {
     
-		SInt16 theAliasResFileNum = FSpOpenResFile ( &theAliasFile, fsRdWrPerm );
+	if(! theErr) {
 		
-		if( theAliasResFileNum != -1 )
-		{
-			AliasHandle	theAliasHandle;
-			if( NewAlias ( NULL, inTargetFileSpec, &theAliasHandle ) == noErr )
-			{ 
-				AddResource( (Handle)theAliasHandle, rAliasType, 0, inFileName );
+        FSIORefNum theAliasResFileNum = FSOpenResFile(&theAliasFileFSRef, fsRdWrPerm);
+		if (theAliasResFileNum != -1){
+			
+            // Add the alias resource
+            AliasHandle	theAliasHandle;
+            theErr = FSNewAlias(NULL, inTargetFileFSRef, &theAliasHandle);
+			if (! theErr) {
+				AddResource((Handle)theAliasHandle, rAliasType, 0, "\p");
 				theErr = ResError();
 			}
 			
-			CloseResFile( theAliasResFileNum );
+			CloseResFile(theAliasResFileNum);
 		}
 	}
 	
-	UseResFile( savedResFile );
+	UseResFile(savedResFile);
 	
 	
 	//
-	// Set Finder flags on our invisible alias file
+	// Set Finder flags to an invisible alias file
 	//
     if (! theErr) {
     
-        filePB.hFileInfo.ioCompletion 	= NULL;
-        filePB.hFileInfo.ioNamePtr 		= theAliasFile.name;
-        filePB.hFileInfo.ioVRefNum 		= inVRefNum;
-        filePB.hFileInfo.ioFDirIndex 	= 0;
-        filePB.hFileInfo.ioDirID 		= inDirID;
+        FSCatalogInfo	theCatalogInfo;
         
-        if( PBGetCatInfoSync(&filePB) == noErr )
-        {
-            filePB.hFileInfo.ioFlFndrInfo.fdFlags |= kIsAlias;
-            
-            if( inMakeInvisible )
-                filePB.hFileInfo.ioFlFndrInfo.fdFlags |= kIsInvisible;
-                
-            filePB.hFileInfo.ioDirID 		= inDirID;
-            theErr = PBSetCatInfoSync(&filePB);
+        theErr = FSGetCatalogInfo(&theAliasFileFSRef, kFSCatInfoFinderInfo, &theCatalogInfo, NULL, NULL, NULL);
+        if (! theErr) {
+
+            ((FileInfo *)theCatalogInfo.finderInfo)->finderFlags |= kIsAlias;
+
+            if (inMakeInvisible)
+                ((FileInfo *)theCatalogInfo.finderInfo)->finderFlags |= kIsInvisible;
+
+            theErr = FSSetCatalogInfo(&theAliasFileFSRef, kFSCatInfoFinderInfo, &theCatalogInfo);
         }
+		
+		if (outAliasFileFSRef) {
+			*outAliasFileFSRef = theAliasFileFSRef;
+		}
+        
     }
 	
 	return theErr;
@@ -288,7 +289,7 @@ OSErr NewAliasFile( SInt16 inVRefNum, SInt32 inDirID, ConstStr31Param inFileName
     A utility routine used by InstallSpeakableItemsForThisApplication to copy the contents of a folder.
 */
 
-void InstallSpeakableItemsFolderContents( const FSRef * inSourceFolderFSRef, const FSRef * inTargetFolderFSRef, OSType inFileType, OSType inFileCreator, Boolean inRsrcForkInDataFork )
+void InstallSpeakableItemsFolderContents(const FSRef * inSourceFolderFSRef, const FSRef * inTargetFolderFSRef, OSType inFileType, OSType inFileCreator, Boolean inRsrcForkInDataFork)
 {
 
     const	ItemCount	kMaxInteratorCount = 100;
@@ -301,79 +302,79 @@ void InstallSpeakableItemsFolderContents( const FSRef * inSourceFolderFSRef, con
     HFSUniStr255 *	sourceHFSUniNameArray = NULL;
     UInt32			sourceFileIndex = 0;
 
-    sourceFSRefArray = malloc( kMaxInteratorCount * sizeof(FSRef) );
-    sourceFSCatInfoArray = malloc( kMaxInteratorCount * sizeof(FSCatalogInfo) );
-    sourceHFSUniNameArray = malloc( kMaxInteratorCount * sizeof(HFSUniStr255) );
+    sourceFSRefArray = malloc(kMaxInteratorCount * sizeof(FSRef));
+    sourceFSCatInfoArray = malloc(kMaxInteratorCount * sizeof(FSCatalogInfo));
+    sourceHFSUniNameArray = malloc(kMaxInteratorCount * sizeof(HFSUniStr255));
     
-    status = FSOpenIterator( inSourceFolderFSRef, kFSIterateFlat, &sourceIterator );
+    status = FSOpenIterator(inSourceFolderFSRef, kFSIterateFlat, &sourceIterator);
    
     if (!status && sourceFSRefArray && sourceFSCatInfoArray && sourceHFSUniNameArray) {
             
         do {
     
             // Grab a batch of source files to process from the source directory
-            status = FSGetCatalogInfoBulk( sourceIterator, kMaxInteratorCount, &sourceDirObjectCount, NULL, kFSCatInfoNodeFlags | kFSCatInfoFinderInfo | kFSCatInfoDataSizes, sourceFSCatInfoArray, sourceFSRefArray, NULL, sourceHFSUniNameArray);
+            status = FSGetCatalogInfoBulk(sourceIterator, kMaxInteratorCount, &sourceDirObjectCount, NULL, kFSCatInfoNodeFlags | kFSCatInfoFinderInfo | kFSCatInfoDataSizes, sourceFSCatInfoArray, sourceFSRefArray, NULL, sourceHFSUniNameArray);
             if ((status == errFSNoMoreItems || status == noErr) && sourceDirObjectCount) {
                 status = noErr;
     
-                for (sourceFileIndex = 0; sourceFileIndex < sourceDirObjectCount; sourceFileIndex++ ) {
+                for (sourceFileIndex = 0; sourceFileIndex < sourceDirObjectCount; sourceFileIndex++) {
                                     
                     // Only copy files, not directories
-                    if ( ! (sourceFSCatInfoArray[sourceFileIndex].nodeFlags & kFSNodeIsDirectoryMask)) {
+                    if (! (sourceFSCatInfoArray[sourceFileIndex].nodeFlags & kFSNodeIsDirectoryMask)) {
             
                         FSRef			targetFileFSRef;
                         FSCatalogInfo	targetFileCat;
-                        SInt16			itemToBeCopiedDataForkRefNum = -1;
+                        FSIORefNum		itemToBeCopiedDataForkRefNum = -1;
             
                         // Open data and resource fork of "from" file
-                        status = FSOpenFork( &(sourceFSRefArray[sourceFileIndex]), 0, NULL, fsRdPerm, &itemToBeCopiedDataForkRefNum);
+                        status = FSOpenFork(&(sourceFSRefArray[sourceFileIndex]), 0, NULL, fsRdPerm, &itemToBeCopiedDataForkRefNum);
                         
                         if (! status) {
-                            memcpy( targetFileCat.finderInfo, sourceFSCatInfoArray[sourceFileIndex].finderInfo, sizeof(UInt8) * 16 );
+                            memcpy(targetFileCat.finderInfo, sourceFSCatInfoArray[sourceFileIndex].finderInfo, sizeof(UInt8) * 16);
                             
                             ((FileInfo *)targetFileCat.finderInfo)->fileType		= inFileType; 
                             ((FileInfo *)targetFileCat.finderInfo)->fileCreator 	= inFileCreator;
 
-                            status = FSCreateFileUnicode( inTargetFolderFSRef, sourceHFSUniNameArray[sourceFileIndex].length, sourceHFSUniNameArray[sourceFileIndex].unicode,kFSCatInfoFinderInfo, &targetFileCat, &targetFileFSRef, NULL);
+                            status = FSCreateFileUnicode(inTargetFolderFSRef, sourceHFSUniNameArray[sourceFileIndex].length, sourceHFSUniNameArray[sourceFileIndex].unicode,kFSCatInfoFinderInfo, &targetFileCat, &targetFileFSRef, NULL);
                         }
                                 
                         if (! status && itemToBeCopiedDataForkRefNum != -1) {
                             
-                            SInt32	theDataCount = sourceFSCatInfoArray[sourceFileIndex].dataLogicalSize;
-                            void *	theDataBuffer = malloc( theDataCount );
+                            Size	theDataCount = sourceFSCatInfoArray[sourceFileIndex].dataLogicalSize;
+                            void *	theDataBuffer = malloc(theDataCount);
                             if (theDataBuffer) {
                             
-                                SInt16			newForkRefNum = -1;
+                                FSIORefNum		newForkRefNum = -1;
                                 HFSUniStr255	newForkName;
             
                                 // Create the fork specified my the given flag
                                 if (inRsrcForkInDataFork)
-                                    status = FSGetResourceForkName( &newForkName );
+                                    status = FSGetResourceForkName(&newForkName);
                                 else
-                                    status = FSGetDataForkName( &newForkName );
+                                    status = FSGetDataForkName(&newForkName);
                         
                                 if (! status)
-                                    status = FSCreateFork( &targetFileFSRef, newForkName.length, newForkName.unicode);
+                                    status = FSCreateFork(&targetFileFSRef, newForkName.length, newForkName.unicode);
                                 
                                 if (! status)
-                                    status = FSOpenFork( &targetFileFSRef, newForkName.length, newForkName.unicode, fsRdWrPerm, &newForkRefNum);
+                                    status = FSOpenFork(&targetFileFSRef, newForkName.length, newForkName.unicode, fsRdWrPerm, &newForkRefNum);
                                     
                                 if (! status)
-                                    status = FSReadFork( itemToBeCopiedDataForkRefNum, fsFromStart, 0, theDataCount, theDataBuffer, (ByteCount *) &theDataCount);
+                                    status = FSReadFork(itemToBeCopiedDataForkRefNum, fsFromStart, 0, theDataCount, theDataBuffer, (ByteCount *) &theDataCount);
                                     
                                 if (! status)
-                                    status = FSWriteFork( newForkRefNum, fsFromStart, 0, theDataCount, theDataBuffer, (ByteCount *) &theDataCount);
+                                    status = FSWriteFork(newForkRefNum, fsFromStart, 0, theDataCount, theDataBuffer, (ByteCount *) &theDataCount);
                     
                                 if (newForkRefNum != -1)
-                                    FSCloseFork( newForkRefNum );
+                                    FSCloseFork(newForkRefNum);
                             
-                                free( theDataBuffer );
+                                free(theDataBuffer);
                             }
                         }
                         
                         // Close up our source files.
                         if (itemToBeCopiedDataForkRefNum != -1)
-                            FSCloseFork( itemToBeCopiedDataForkRefNum );
+                            FSCloseFork(itemToBeCopiedDataForkRefNum);
                     }
                 
                 }
@@ -382,8 +383,8 @@ void InstallSpeakableItemsFolderContents( const FSRef * inSourceFolderFSRef, con
             
         } while (! status);
         
-        free( sourceFSRefArray );
-        free( sourceFSCatInfoArray );
-        free( sourceHFSUniNameArray );
+        free(sourceFSRefArray);
+        free(sourceFSCatInfoArray);
+        free(sourceHFSUniNameArray);
     }
 }

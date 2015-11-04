@@ -1,5 +1,5 @@
 /*
- IMPORTANT: This Apple software is supplied to you by Apple Computer,
+ IMPORTANT:This Apple software is supplied to you by Apple Computer,
  Inc. ("Apple") in consideration of your agreement to the following terms,
  and your use, installation, modification or redistribution of this Apple
  software constitutes acceptance of these terms.  If you do not agree with
@@ -41,7 +41,7 @@
 	RejectableListener.m
 	NewRejectableModel
 	
-	2001-2005 (c) 2001-2005 Apple Computer. All rights reserved.
+	(c) 2001-2007 Apple Inc. All rights reserved.
 
 
 	The rejectable listener is a class that demonstrates the power of using the rejectable
@@ -61,10 +61,10 @@
 #import "RejectableListener.h"
 
 //  Prototypes
-pascal OSErr HandleSpeechDoneAppleEvent ( const AppleEvent *theAEevt, AppleEvent* reply, long refcon);
-OSErr	SRAddTextFromCFString(SRLanguageObject base , CFStringRef theText , long refCon);
-OSErr	SRNewPhraseFromCFString(SRRecognitionSystem inSystem , SRPhrase * outPhrase , CFStringRef theText);
-Boolean AddCommands( SRRecognizer inSpeechRecognizer, CFArrayRef inCommandNamesArray );
+pascal OSErr HandleSpeechDoneAppleEvent (const AppleEvent *theAEevt, AppleEvent* reply, long refcon);
+OSErr	SRAddTextFromCFString(SRLanguageObject base, CFStringRef theText, long refCon);
+OSErr	SRNewPhraseFromCFString(SRRecognitionSystem inSystem, SRPhrase * outPhrase, CFStringRef theText);
+Boolean AddCommands(SRRecognizer inSpeechRecognizer, CFArrayRef inCommandNamesArray);
 
 //  Constants
 const long 		kNamesRefCon		=	'name';
@@ -77,7 +77,7 @@ const long 		kRejectedWordRefCon = 	'rejc';
 
 //  ------------------------------------------------------------------------------
 //  setController - sets the instance variable to the controller object for the view
-- (void)setController: (id)theController
+- (void)setController:(id)theController
 {
 	_myController = theController;
 }
@@ -86,7 +86,7 @@ const long 		kRejectedWordRefCon = 	'rejc';
 //  setRejectable - set the boolean value for the rejectable state on our language
 //  model.  Note, we will use this value for the rejectable property on both the 
 //  name and the day of the week language objects.
-- (OSErr)setRejectable: (BOOL)theState
+- (OSErr)setRejectable:(BOOL)theState
 {
 	_rejectableState = theState;
 	//  if we have any models we set the rejection property on those models to whatever the new state is
@@ -106,16 +106,22 @@ const long 		kRejectedWordRefCon = 	'rejc';
 	[self getLMPlist];	//  this has our language model data.  Better have it before proceeding.
 	if (_theLMPlist != NULL) {
 		//  install our speech apple event handler (the refcon will point back to this object)
-		if (AEInstallEventHandler( kAESpeechSuite, kAESpeechDone, NewAEEventHandlerUPP(HandleSpeechDoneAppleEvent), (SInt32)self, false) == noErr) {
+
+// Conditionalized just to remove compiler warnings.
+#if __LP64__
+		if (AEInstallEventHandler(kAESpeechSuite, kAESpeechDone, NewAEEventHandlerUPP(HandleSpeechDoneAppleEvent), self, false) == noErr) {
+#else
+		if (AEInstallEventHandler(kAESpeechSuite, kAESpeechDone, NewAEEventHandlerUPP(HandleSpeechDoneAppleEvent), (long)self, false) == noErr) {
+#endif
 		//  open a recognition system
-		if (SROpenRecognitionSystem( &_theRecognitionSystem, kSRDefaultRecognitionSystemID ) == noErr) {
+		if (SROpenRecognitionSystem(&_theRecognitionSystem, kSRDefaultRecognitionSystemID) == noErr) {
 			// Use the Speech Feedback window
 			Byte	useFeedback = kSRHasFeedbackHasListenModes;
-			if (SRSetProperty( _theRecognitionSystem, kSRFeedbackAndListeningModes, &useFeedback, sizeof(useFeedback) ) == noErr) {
+			if (SRSetProperty(_theRecognitionSystem, kSRFeedbackAndListeningModes, &useFeedback, sizeof(useFeedback)) == noErr) {
 				//  create a recognizer
-				if (SRNewRecognizer( _theRecognitionSystem, &_theRecognizer, kSRDefaultSpeechSource ) == noErr) {
+				if (SRNewRecognizer(_theRecognitionSystem, &_theRecognizer, kSRDefaultSpeechSource) == noErr) {
 					//  lets block all other recognizers if there are any and listen only in the foreground
-					SRSetProperty(_theRecognizer , kSRBlockModally , &blockModallyFlg , sizeof(Boolean));
+					SRSetProperty(_theRecognizer, kSRBlockModally, &blockModallyFlg, sizeof(Boolean));
 					SRSetProperty (_theRecognizer, kSRForegroundOnly, &foregroundOnlyFlg, sizeof(foregroundOnlyFlg));
                                         //  we only want to be notified of speech done events
 					SRSetProperty (_theRecognizer, kSRNotificationParam, &notifFlags, sizeof(notifFlags));
@@ -131,14 +137,14 @@ const long 		kRejectedWordRefCon = 	'rejc';
 					
                                         //  create 3 empty language models for later
 					
-					if ((SRNewLanguageModel( _theRecognitionSystem, &_topLanguageModel, topLM, sizeof(topLM)) == noErr)
-						&& (SRNewLanguageModel( _theRecognitionSystem, &_namesModel, nameLM, sizeof(nameLM)) == noErr)
-						&& (SRNewLanguageModel( _theRecognitionSystem, &_dayModel, dayLM, sizeof(dayLM)) == noErr)) {
+					if ((SRNewLanguageModel(_theRecognitionSystem, &_topLanguageModel, topLM, sizeof(topLM)) == noErr)
+						&& (SRNewLanguageModel(_theRecognitionSystem, &_namesModel, nameLM, sizeof(nameLM)) == noErr)
+						&& (SRNewLanguageModel(_theRecognitionSystem, &_dayModel, dayLM, sizeof(dayLM)) == noErr)) {
 						
 						//  set the refcon's for the various models
-						SRSetProperty(_topLanguageModel, kSRRefCon , &kTopLMRefcon , sizeof(kTopLMRefcon));
-						SRSetProperty(_namesModel, kSRRefCon , &kNamesRefCon , sizeof(kNamesRefCon));
-						SRSetProperty(_dayModel, kSRRefCon , &kDatesRefCon , sizeof(kDatesRefCon));						
+						SRSetProperty(_topLanguageModel, kSRRefCon, &kTopLMRefcon, sizeof(kTopLMRefcon));
+						SRSetProperty(_namesModel, kSRRefCon, &kNamesRefCon, sizeof(kNamesRefCon));
+						SRSetProperty(_dayModel, kSRRefCon, &kDatesRefCon, sizeof(kDatesRefCon));						
 						
 						//  fill in the language models
 						if ([self buildLanguageModels] == noErr) 
@@ -168,17 +174,17 @@ const long 		kRejectedWordRefCon = 	'rejc';
 	_bundle = CFBundleGetMainBundle();
 	if (_bundle != NULL) {
 		
-		CFURLRef	theLMURL = CFBundleCopyResourceURL ( _bundle, CFSTR( "LMPropertyList.plist" ), NULL, NULL );
+		CFURLRef	theLMURL = CFBundleCopyResourceURL (_bundle, CFSTR("LMPropertyList.plist"), NULL, NULL);
 	
 		if (theLMURL) {
 			
 			CFDataRef	theLMCFDataRef = NULL;
 			SInt32 		theURLAccessErrorCode;
 							
-			if( CFURLCreateDataAndPropertiesFromResource( NULL, theLMURL, &theLMCFDataRef, NULL, NULL, &theURLAccessErrorCode )) {
+			if(CFURLCreateDataAndPropertiesFromResource(NULL, theLMURL, &theLMCFDataRef, NULL, NULL, &theURLAccessErrorCode)) {
 				CFStringRef		errorString;
-				if (theLMCFDataRef) _theLMPlist = CFPropertyListCreateFromXMLData( NULL, theLMCFDataRef, kCFPropertyListImmutable, &errorString );
-				CFRelease( theLMCFDataRef );
+				if (theLMCFDataRef) _theLMPlist = CFPropertyListCreateFromXMLData(NULL, theLMCFDataRef, kCFPropertyListImmutable, &errorString);
+				CFRelease(theLMCFDataRef);
 				CFRelease(theLMURL);	
 			}
 		}
@@ -191,8 +197,8 @@ const long 		kRejectedWordRefCon = 	'rejc';
 {
 	OSErr	theErr = noErr;
 	
-	if (_namesModel != NULL) theErr = SRSetProperty( _namesModel , kSRRejectable , &_rejectableState , sizeof( _rejectableState ));
-	if (!theErr && (_dayModel != NULL)) theErr = SRSetProperty( _dayModel , kSRRejectable , &_rejectableState , sizeof( _rejectableState ));
+	if (_namesModel != NULL) theErr = SRSetProperty(_namesModel, kSRRejectable, &_rejectableState, sizeof(_rejectableState));
+	if (!theErr && (_dayModel != NULL)) theErr = SRSetProperty(_dayModel, kSRRejectable, &_rejectableState, sizeof(_rejectableState));
 	
 	return theErr;
 }
@@ -210,9 +216,9 @@ const long 		kRejectedWordRefCon = 	'rejc';
 	if (!theErr) theErr = [self associateLMs];
         if (!theErr) {
             //  get the static item from our plist
-            helpArray = CFArrayGetValueAtIndex(_theLMPlist , 2);
+            helpArray = CFArrayGetValueAtIndex(_theLMPlist, 2);
             //  create an array with this one item and update the help list
-            AddCommands( _theRecognizer, helpArray );
+            AddCommands(_theRecognizer, helpArray);
             CFRelease(helpArray);
         }
 	return theErr;
@@ -230,13 +236,13 @@ const long 		kRejectedWordRefCon = 	'rejc';
 	//  these names are the strings in the array associated with the peopleNames dictionary
 	//  which is the first element of the property list
 	OSErr		theErr = noErr;
-	CFArrayRef	namesArray = CFArrayGetValueAtIndex(_theLMPlist , 0);
+	CFArrayRef	namesArray = CFArrayGetValueAtIndex(_theLMPlist, 0);
 	CFStringRef theName;
-	CFIndex		numberNames = CFArrayGetCount( namesArray );
+	CFIndex		numberNames = CFArrayGetCount(namesArray);
 	int			i;
-	for ( i = 0 ; i < numberNames; i++ ) {
-		theName= CFArrayGetValueAtIndex(namesArray , i);
-		theErr = SRAddTextFromCFString(_namesModel , theName , 0);
+	for (i = 0 ; i < numberNames; i++) {
+		theName= CFArrayGetValueAtIndex(namesArray, i);
+		theErr = SRAddTextFromCFString(_namesModel, theName, 0);
 		if (theErr) return theErr;
 	}
 	CFRelease(namesArray);
@@ -250,13 +256,13 @@ const long 		kRejectedWordRefCon = 	'rejc';
 	//  these day names are the strings in the array associated with the second
 	//  element of the property list
 	OSErr		theErr = noErr;
-	CFArrayRef	dayNameArray = CFArrayGetValueAtIndex(_theLMPlist , 1);
+	CFArrayRef	dayNameArray = CFArrayGetValueAtIndex(_theLMPlist, 1);
 	CFStringRef theDayName;
-	CFIndex		numberDayNames = CFArrayGetCount( dayNameArray );
+	CFIndex		numberDayNames = CFArrayGetCount(dayNameArray);
 	int			i;
-	for ( i = 0 ; i < numberDayNames; i++ ) {
-		theDayName = CFArrayGetValueAtIndex(dayNameArray , i);
-		theErr = SRAddTextFromCFString(_dayModel , theDayName , 0);
+	for (i = 0 ; i < numberDayNames; i++) {
+		theDayName = CFArrayGetValueAtIndex(dayNameArray, i);
+		theErr = SRAddTextFromCFString(_dayModel, theDayName, 0);
 		if (theErr) return theErr;
 	}
 	CFRelease(dayNameArray);
@@ -274,24 +280,24 @@ const long 		kRejectedWordRefCon = 	'rejc';
 	Str255	onPhrase	= "\pon";
 	
 	//  create a path to collect up all this stuff to add to the gDefaultLM
-	theErr = SRNewPath(_theRecognitionSystem , &path);
+	theErr = SRNewPath(_theRecognitionSystem, &path);
 	//  Now build up the path
-	if (!theErr) theErr = SRAddText(path , &meetWithPhrase[1] , meetWithPhrase[0] , 0);	//"meet with …"
-	if (!theErr) theErr = SRAddLanguageObject(path , _namesModel);				// "meet with <person>…
-	if (!theErr) theErr = SRAddText(path , &onPhrase[1] , onPhrase[0] , 0);		//"meet with <person> on…"
-	if (!theErr) theErr = SRAddLanguageObject(path , _dayModel);				// "meet with <person> on <date>"
+	if (!theErr) theErr = SRAddText(path, &meetWithPhrase[1], meetWithPhrase[0], 0);	//"meet with …"
+	if (!theErr) theErr = SRAddLanguageObject(path, _namesModel);				// "meet with <person>…
+	if (!theErr) theErr = SRAddText(path, &onPhrase[1], onPhrase[0], 0);		//"meet with <person> on…"
+	if (!theErr) theErr = SRAddLanguageObject(path, _dayModel);				// "meet with <person> on <date>"
 		//  add it to the top LM
-	if (!theErr) theErr = SRAddLanguageObject(_topLanguageModel , path);	// "meet with <person> on <date>"	
+	if (!theErr) theErr = SRAddLanguageObject(_topLanguageModel, path);	// "meet with <person> on <date>"	
 		//  associate the top language model with the recognizer
-	if (!theErr) theErr = SRSetLanguageModel( _theRecognizer, _topLanguageModel );
+	if (!theErr) theErr = SRSetLanguageModel(_theRecognizer, _topLanguageModel);
 	
-	SRReleaseObject( path );	
+	SRReleaseObject(path);	
 	return theErr;
 }
 
 //  ------------------------------------------------------------------------------
 //  handleSpeechDoneEvent
-- (OSErr)handleSpeechDoneEvent: (const AppleEvent *)theAEevt
+- (OSErr)handleSpeechDoneEvent:(const AppleEvent *)theAEevt
 {
 	long			actualSize = 0;
 	DescType		actualType;
@@ -299,7 +305,7 @@ const long 		kRejectedWordRefCon = 	'rejc';
 	SRRecognitionResult	recResult = 0;
 	SRRecognizer		theRecognizer = 0;
 		//get status
-	theErr = AEGetParamPtr(theAEevt, keySRSpeechStatus, typeShortInteger, &actualType, (Ptr)&recStatus, sizeof(theErr), &actualSize);
+	theErr = AEGetParamPtr(theAEevt, keySRSpeechStatus, typeSInt16, &actualType, (Ptr)&recStatus, sizeof(theErr), &actualSize);
 		//  get the recognizer
 	if (!theErr && !recStatus)
 		theErr = AEGetParamPtr(theAEevt, keySRRecognizer, typeSRRecognizer, &actualType, (Ptr)&theRecognizer, sizeof(theRecognizer), &actualSize);
@@ -314,44 +320,44 @@ const long 		kRejectedWordRefCon = 	'rejc';
 
 //  ------------------------------------------------------------------------------
 //	
-- (OSErr)processRecognitionResult: (SRRecognitionResult) recResult
+- (OSErr)processRecognitionResult:(SRRecognitionResult) recResult
 {
 	OSErr				theErr = noErr;
-	SInt32				len = 0;
+	Size				len = 0;
 	SRLanguageModel		resultLM = 0;
-	SRLanguageObject	theItem , theDateItem , theNameItem;
+	SRLanguageObject	theItem, theDateItem, theNameItem;
 	long				refCon = 0, itemCount = 0;
 	Str255				theRecognizedText = "\p";
-	Boolean				noRecognizedName = false , noRecognizedDate = false;
+	Boolean				noRecognizedName = false, noRecognizedDate = false;
 	
 	if (recResult) {
 		len = sizeof(SRLanguageModel);
 		theErr = SRGetProperty(recResult, kSRLanguageModelFormat, &resultLM, &len);
 		if (!theErr) {
-			len = sizeof( theRecognizedText );
-			SRGetProperty( recResult , kSRTEXTFormat , &theRecognizedText , &len);
+			len = sizeof(theRecognizedText);
+			SRGetProperty(recResult, kSRTEXTFormat, &theRecognizedText, &len);
 			[_myController displayRecognitionResult:(char *)theRecognizedText];
 			
-			len = sizeof( refCon );
-			theErr = SRGetProperty( resultLM , kSRRefCon , &refCon , &len);
+			len = sizeof(refCon);
+			theErr = SRGetProperty(resultLM, kSRRefCon, &refCon, &len);
 			if (!theErr) {
 				if (refCon == kTopLMRefcon) {
-					SRCountItems(resultLM , &itemCount);
+					SRCountItems(resultLM, &itemCount);
 					if (itemCount == 1) {
 					//  we got this far so we've got our utterance,  now we want to see if
 					//  the embedded language models are 0.  The first item is a path
 						SRGetIndexedItem(resultLM, &theItem, 0);
 						//  get the first item in the path which sould be the name
-						SRCountItems(theItem , &itemCount);  //  should be 4 items
+						SRCountItems(theItem, &itemCount);  //  should be 4 items
 						if (itemCount == 4) {
-							SRGetIndexedItem( theItem , &theNameItem , 1);
-							SRGetProperty( theNameItem , kSRRefCon , &refCon , &len);
+							SRGetIndexedItem(theItem, &theNameItem, 1);
+							SRGetProperty(theNameItem, kSRRefCon, &refCon, &len);
 							//  if the refcon here is kRejectedWordRefCon then we can set the noRecognizedName flag since it indicates that 
 							//  it was rejected.  Should have been 'name'
 							if (refCon == kRejectedWordRefCon) noRecognizedName = TRUE;
 							//  Get the last item which should be the date
-							SRGetIndexedItem( theItem , &theDateItem , 3);
-							SRGetProperty( theDateItem , kSRRefCon , &refCon , &len);
+							SRGetIndexedItem(theItem, &theDateItem, 3);
+							SRGetProperty(theDateItem, kSRRefCon, &refCon, &len);
 							//  if the refcon here is kRejectedWordRefCon then we can set the kNoRecognizedDate flag since if it were recognized
 							//  it should have been 'date'
 							if (refCon == kRejectedWordRefCon) noRecognizedDate = TRUE;
@@ -373,9 +379,9 @@ const long 		kRejectedWordRefCon = 	'rejc';
 							[self beAdummy];
 					}
 				}
-		SRReleaseObject( theItem );
-		SRReleaseObject( theNameItem );
-		SRReleaseObject( theDateItem );
+		SRReleaseObject(theItem);
+		SRReleaseObject(theNameItem);
+		SRReleaseObject(theDateItem);
 		SRReleaseObject (resultLM);
 	}
     return theErr;
@@ -389,7 +395,7 @@ const long 		kRejectedWordRefCon = 	'rejc';
 -(void)clarifyNameDialog
 {
     char	thePrompt[] = "Did not get the name.";
-    SRSpeakAndDrawText(_theRecognizer , &thePrompt, sizeof(thePrompt));
+    SRSpeakAndDrawText(_theRecognizer, &thePrompt, sizeof(thePrompt));
 
 }
 
@@ -398,7 +404,7 @@ const long 		kRejectedWordRefCon = 	'rejc';
 -(void)clarifyDateDialog
 {
     char	thePrompt[] = "Did not get the date.";
-    SRSpeakAndDrawText(_theRecognizer , &thePrompt, sizeof(thePrompt));
+    SRSpeakAndDrawText(_theRecognizer, &thePrompt, sizeof(thePrompt));
 }
 
 //  ------------------------------------------------------------------------------
@@ -406,7 +412,7 @@ const long 		kRejectedWordRefCon = 	'rejc';
 -(void)whatAreYouTalkingAboutDialog
 {
     char	thePrompt[] = "I really didn't get much of what you said.";
-    SRSpeakAndDrawText(_theRecognizer , &thePrompt, sizeof(thePrompt));
+    SRSpeakAndDrawText(_theRecognizer, &thePrompt, sizeof(thePrompt));
 }
 
 //  ------------------------------------------------------------------------------
@@ -415,7 +421,7 @@ const long 		kRejectedWordRefCon = 	'rejc';
 -(void)beAdummy
 {
     char	thePrompt[] = "Huh?";
-    SRSpeakAndDrawText(_theRecognizer , &thePrompt, sizeof(thePrompt));
+    SRSpeakAndDrawText(_theRecognizer, &thePrompt, sizeof(thePrompt));
 
 }
 @end
@@ -426,15 +432,15 @@ const long 		kRejectedWordRefCon = 	'rejc';
 
 //  ------------------------------------------------------------------------------
 //  Gets sent to the application by the SR Server.  Dispatch to the appropriate method
-pascal OSErr HandleSpeechDoneAppleEvent ( const AppleEvent *theAEevt, AppleEvent* reply, long refcon)
+pascal OSErr HandleSpeechDoneAppleEvent (const AppleEvent *theAEevt, AppleEvent* reply, long refcon)
 {
-	[(RejectableListener *)refcon handleSpeechDoneEvent: theAEevt];
+	[(RejectableListener *)refcon handleSpeechDoneEvent:theAEevt];
 	return noErr;
 }
 
 //  ------------------------------------------------------------------------------
 // 	SRAddTextFromCFString  -  a utility routine for adding text as a CFString to a language model object
-OSErr	SRAddTextFromCFString(SRLanguageObject base , CFStringRef theText , long refCon)
+OSErr	SRAddTextFromCFString(SRLanguageObject base, CFStringRef theText, long refCon)
 {
 	//  like SRAddText but for a CFStringRef
     OSErr		theErr			= noErr;
@@ -443,21 +449,27 @@ OSErr	SRAddTextFromCFString(SRLanguageObject base , CFStringRef theText , long r
 	
     if (theText) {
         theStringLen = CFStringGetLength(theText);
-        theBuffer = (char*)CFStringGetCStringPtr(theText , kCFStringEncodingMacRoman);
+        theBuffer = (char*)CFStringGetCStringPtr(theText, kCFStringEncodingMacRoman);
     }
 	
-	//  really should check for NULL, naaaa.
-    if (theBuffer)
-        theErr = SRAddText(base , theBuffer , (Size)theStringLen , refCon);
-	else
+    if (theBuffer) {
+// Conditionalized just to remove compiler warnings.
+#if __LP64__
+        theErr = SRAddText(base, theBuffer, theStringLen, (void *)refCon);
+#else
+        theErr = SRAddText(base, theBuffer, theStringLen, refCon);
+#endif
+	}
+	else {
         theErr = -1;
+	}
         
 	return theErr;
 }
 
 //  ------------------------------------------------------------------------------
 // 	SRNewPhraseFromCFString  -  given some text as a CFString, return a phrase with that text
-OSErr	SRNewPhraseFromCFString(SRRecognitionSystem inSystem , SRPhrase * outPhrase , CFStringRef theText)
+OSErr	SRNewPhraseFromCFString(SRRecognitionSystem inSystem, SRPhrase * outPhrase, CFStringRef theText)
 {
 	OSErr		status = noErr;
 	CFIndex		theStringLen = 0;
@@ -465,9 +477,9 @@ OSErr	SRNewPhraseFromCFString(SRRecognitionSystem inSystem , SRPhrase * outPhras
 	SRPhrase	thePhrase = NULL;
 	
 	theStringLen = CFStringGetLength(theText);
-	theBuffer = (char*)CFStringGetCStringPtr(theText , kCFStringEncodingMacRoman);
+	theBuffer = (char*)CFStringGetCStringPtr(theText, kCFStringEncodingMacRoman);
 	
-	status = SRNewPhrase(inSystem , &thePhrase , theBuffer , theStringLen);
+	status = SRNewPhrase(inSystem, &thePhrase, theBuffer, theStringLen);
 	*outPhrase = thePhrase;
 	return status;
 }
@@ -475,20 +487,20 @@ OSErr	SRNewPhraseFromCFString(SRRecognitionSystem inSystem , SRPhrase * outPhras
 //  ------------------------------------------------------------------------------
 //	AddCommands - This version just adds the commands to the speakable commands list and does not 
 //	add or change the language model.
-Boolean AddCommands( SRRecognizer inSpeechRecognizer, CFArrayRef inCommandNamesArray )
+Boolean AddCommands(SRRecognizer inSpeechRecognizer, CFArrayRef inCommandNamesArray)
 {
 
     // Dictionary keys for Commands Data property list
-    #define	kCommandsDataPlacementHintKey	"PlacementHint"		// value type is: CFNumberRef
+    #define	kCommandsDataPlacementHintKey	"PlacementHint"		// value type is:CFNumberRef
     #define	kPlacementHintWhereverNumValue	0
     #define	kPlacementHintProcessNumValue	1			// you must also provide the PSN using kCommandsDataProcessPSNHighKey & kCommandsDataProcessPSNLowKey
     #define	kPlacementHintFirstNumValue	2
     #define	kPlacementHintMiddleNumValue	3
     #define	kPlacementHintLastNumValue	4
-    #define	kCommandsDataProcessPSNHighKey	"ProcessPSNHigh"	// value type is: CFNumberRef
-    #define	kCommandsDataProcessPSNLowKey	"ProcessPSNLow"		// value type is: CFNumberRef
-    #define	kCommandsDataDisplayOrderKey	"DisplayOrder"		// value type is: CFNumberRef  - the order in which recognizers from the same client process should be displayed.
-    #define	kCommandsDataCmdInfoArrayKey	"CommandInfoArray"	// value type is: CFArrayRef of CFDictionaryRef values
+    #define	kCommandsDataProcessPSNHighKey	"ProcessPSNHigh"	// value type is:CFNumberRef
+    #define	kCommandsDataProcessPSNLowKey	"ProcessPSNLow"		// value type is:CFNumberRef
+    #define	kCommandsDataDisplayOrderKey	"DisplayOrder"		// value type is:CFNumberRef  - the order in which recognizers from the same client process should be displayed.
+    #define	kCommandsDataCmdInfoArrayKey	"CommandInfoArray"	// value type is:CFArrayRef of CFDictionaryRef values
     #define	kCommandInfoNameKey		"Text"
     #define	kCommandInfoChildrenKey		"Children"
 
@@ -496,8 +508,8 @@ Boolean AddCommands( SRRecognizer inSpeechRecognizer, CFArrayRef inCommandNamesA
     
     if (inCommandNamesArray) {
     
-        CFIndex	numOfCommands = CFArrayGetCount( inCommandNamesArray );
-        CFMutableArrayRef	theSectionArray = CFArrayCreateMutable( NULL, 0, &kCFTypeArrayCallBacks );
+        CFIndex	numOfCommands = CFArrayGetCount(inCommandNamesArray);
+        CFMutableArrayRef	theSectionArray = CFArrayCreateMutable(NULL, 0, &kCFTypeArrayCallBacks);
         
         // Erase any existing commands in the language model before we begin adding the given list of commands
         if (theSectionArray) {
@@ -509,13 +521,13 @@ Boolean AddCommands( SRRecognizer inSpeechRecognizer, CFArrayRef inCommandNamesA
             for (i = 0; i < numOfCommands; i++) {
                
                  CFStringRef	theCommandName = CFArrayGetValueAtIndex(inCommandNamesArray, i);
-                if (theCommandName && CFStringGetCString( theCommandName, theCSringBuffer, 100, kCFStringEncodingMacRoman )) {
+                if (theCommandName && CFStringGetCString(theCommandName, theCSringBuffer, 100, kCFStringEncodingMacRoman)) {
                 	
                         CFStringRef 	keys[1];
                         CFTypeRef		values[1];
                         CFDictionaryRef theItemDict;
                         
-                        keys[0] 	= CFSTR( kCommandInfoNameKey );
+                        keys[0] 	= CFSTR(kCommandInfoNameKey);
                         values[0] 	= theCommandName;
                         
                         // Make CDDictionary our keys and values.
@@ -523,8 +535,8 @@ Boolean AddCommands( SRRecognizer inSpeechRecognizer, CFArrayRef inCommandNamesA
                         
                         // Add to command array
                         if (theItemDict) {
-                            CFArrayAppendValue( theSectionArray, theItemDict );
-                            CFRelease( theItemDict );  // We release our hold on the dictionary object and let the array own it now.
+                            CFArrayAppendValue(theSectionArray, theItemDict);
+                            CFRelease(theItemDict);  // We release our hold on the dictionary object and let the array own it now.
                         }
                         else
                             successfullyAddCommands = false;
@@ -552,12 +564,12 @@ Boolean AddCommands( SRRecognizer inSpeechRecognizer, CFArrayRef inCommandNamesA
                 thisAppsPSN.highLongOfPSN = 0;
                 thisAppsPSN.lowLongOfPSN = 0;
         
-                GetCurrentProcess( &thisAppsPSN );
+                GetCurrentProcess(&thisAppsPSN);
             
-                keys[0] 	= CFSTR( kCommandsDataPlacementHintKey );
-                keys[1] 	= CFSTR( kCommandsDataCmdInfoArrayKey );
-                keys[2] 	= CFSTR( kCommandsDataProcessPSNHighKey );
-                keys[3] 	= CFSTR( kCommandsDataProcessPSNLowKey );
+                keys[0] 	= CFSTR(kCommandsDataPlacementHintKey);
+                keys[1] 	= CFSTR(kCommandsDataCmdInfoArrayKey);
+                keys[2] 	= CFSTR(kCommandsDataProcessPSNHighKey);
+                keys[3] 	= CFSTR(kCommandsDataProcessPSNLowKey);
                 values[0] 	= CFNumberCreate(NULL, kCFNumberSInt32Type, &placementHint);
                 values[1] 	= theSectionArray;
                 values[2] 	= CFNumberCreate(NULL, kCFNumberSInt32Type, &(thisAppsPSN.highLongOfPSN));
@@ -573,25 +585,25 @@ Boolean AddCommands( SRRecognizer inSpeechRecognizer, CFArrayRef inCommandNamesA
 
                     	// Set command list in our SRRecognizer object, causing the Speech Commands window to update.
                         (void)SRSetProperty (inSpeechRecognizer, 'cdpl', CFDataGetBytePtr(dictData), CFDataGetLength(dictData));
-                        CFRelease( dictData );
+                        CFRelease(dictData);
                     }
                 }
                 
                 // Release our hold on the dictionary object and let the array own it now.
                 if (theItemDict)
-                    CFRelease( theItemDict );
+                    CFRelease(theItemDict);
                 
                 // Release our values
                 if (values[0])
-                    CFRelease( values[0] );
+                    CFRelease(values[0]);
                 
                 if (values[2])
-                    CFRelease( values[2] );
+                    CFRelease(values[2]);
                     
                 if (values[3])
-                    CFRelease( values[3] );
+                    CFRelease(values[3]);
                     
-                CFRelease( theSectionArray );
+                CFRelease(theSectionArray);
             }
         }
 

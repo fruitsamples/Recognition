@@ -41,7 +41,7 @@
 	FauxTunes.m
 	fauxTunes
 	
-	Copyright (c) 2001-2005 Apple Computer, Inc. All rights reserved.
+	Copyright (c) 2001-2007 Apple Inc. All rights reserved.
 */
 
 #import "FauxTunes.h"

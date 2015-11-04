@@ -42,7 +42,7 @@
 	MyDocument.m
 	ExpensePad
 	
-	Copyright (c) 2000-2005 Apple Computer. All rights reserved.
+	Copyright (c) 2000-2007 Apple Inc. All rights reserved.
 
 ************************************************************/
 
@@ -88,25 +88,76 @@ NSString * ExpensePBoardType		       = @"ExpensePBoard";
     Expense	 	* 	e;
     double	   		sum = 0.0;
     SRLanguageModel		lang;
+	NSMutableArray *	commandTextArray = [NSMutableArray new];
     
     [utterances removeAllObjects];
     
     if (!recognizer || SRNewLanguageModel(recSystem, &lang, "expense", 7))
         lang = NULL;
     
-    while (e = [it nextObject]) {
-        sum += [[e amount] doubleValue];
-        if (lang && ![catSeen objectForKey:[e category]]) {
-            NSString *	s = [NSString stringWithFormat:@"Add expense for %@", [e category]];
-            Utterance * u = [Utterance utteranceWithTarget:self 
-                                selector:@selector(addExpenseForCategory:)
-                                withObject:[e category]];
+	if ([expenses count]) {
+		// We already have expenses in this document, so use those categories.
+		while (e = [it nextObject]) {
+			sum += [[e amount] doubleValue];
+			if (lang && ![catSeen objectForKey:[e category]]) {
+				NSString *	s = [NSString stringWithFormat:@"Add expense for %@", [e category]];
+				Utterance * u = [Utterance utteranceWithTarget:self 
+									selector:@selector(addExpenseForCategory:)
+									withObject:[e category]];
 
-            SRAddText(lang, [s cString], [s cStringLength],(long)u);
-            [utterances addObject:u];
-            [catSeen setObject:@"Seen" forKey:[e category]];            
-        }
-    }
+				const char * totalAsCString = [s cStringUsingEncoding:NSMacOSRomanStringEncoding];
+// Conditionalized just to remove warning when building for 32-bit
+#if __LP64__
+				SRAddText(lang, totalAsCString, strlen(totalAsCString), u);
+#else
+				SRAddText(lang, totalAsCString, strlen(totalAsCString), (long)u);
+#endif
+				[utterances addObject:u];
+				[commandTextArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:s, @"Text", NULL]];
+				[catSeen setObject:@"Seen" forKey:[e category]];            
+			}
+		}
+	}
+	else {
+		// For a new document, create a default command.
+		NSString * defaultCategory = [[NSUserDefaults standardUserDefaults] stringForKey:DefaultCategoryKey];
+		if (defaultCategory) {
+			NSString *	s = [NSString stringWithFormat:@"Add expense for %@", defaultCategory];
+			Utterance * u = [Utterance utteranceWithTarget:self 
+								selector:@selector(addExpenseForCategory:)
+								withObject:defaultCategory];
+								
+			const char * totalAsCString = [s cStringUsingEncoding:NSMacOSRomanStringEncoding];
+// Conditionalized just to remove warning when building for 32-bit
+#if __LP64__
+				SRAddText(lang, totalAsCString, strlen(totalAsCString), u);
+#else
+				SRAddText(lang, totalAsCString, strlen(totalAsCString), (long)u);
+#endif
+
+			[utterances addObject:u];
+			[commandTextArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:s, @"Text", NULL]];
+		}
+	}
+	
+	//
+	// Create the XML data that contains the commands to display and give this data to the
+	// recognizer object to display in the Speech Commands window.
+	//
+	ProcessSerialNumber	thisAppsPSN = {kNoProcess, kNoProcess};
+	GetCurrentProcess( &thisAppsPSN );
+
+	NSDictionary * commmandsDisplay = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithLong:1], @"PlacementHint", [NSNumber numberWithLong:thisAppsPSN.highLongOfPSN], @"ProcessPSNHigh", [NSNumber numberWithLong:thisAppsPSN.lowLongOfPSN], @"ProcessPSNLow", commandTextArray, @"CommandInfoArray", NULL];
+
+	// Convert CFDictionary object to XML representation
+	CFDataRef dictData = CFPropertyListCreateXMLData(NULL, (CFDictionaryRef)commmandsDisplay);
+	if (dictData) {
+
+		// Set command list in our SRRecognizer object, causing the Speech Commands window to update.
+		(void)SRSetProperty (recognizer, 'cdpl', CFDataGetBytePtr(dictData), CFDataGetLength(dictData));
+		CFRelease( dictData );
+	}
+	[commandTextArray release];
     
     SRSetLanguageModel(recognizer, lang);
     SRReleaseObject(lang);
@@ -292,8 +343,7 @@ NSString * ExpensePBoardType		       = @"ExpensePBoard";
     NSPasteboard * 	pasteBoard = [NSPasteboard generalPasteboard];
     id			expense	   = [self selectedExpense];
     
-    [pasteBoard declareTypes:[NSArray arrayWithObjects:ExpensePBoardType, NSStringPboardType]
-        owner:nil];
+    [pasteBoard declareTypes:[NSArray arrayWithObjects:ExpensePBoardType, NSStringPboardType, NULL] owner:nil];
     [pasteBoard setData:[NSArchiver archivedDataWithRootObject:expense] forType:ExpensePBoardType];
     [pasteBoard setString:[expense description] forType:NSStringPboardType];
 }
@@ -315,7 +365,7 @@ NSString * ExpensePBoardType		       = @"ExpensePBoard";
     NSPasteboard * 	pasteBoard = [NSPasteboard pasteboardWithName:NSDragPboard];
     id			expense	   = [expenses objectAtIndex:[[rows objectAtIndex:0] intValue]];
     
-    [pasteBoard declareTypes:[NSArray arrayWithObjects:ExpensePBoardType, NSStringPboardType]
+    [pasteBoard declareTypes:[NSArray arrayWithObjects:ExpensePBoardType, NSStringPboardType, nil]
         owner:nil];
     [pasteBoard setData:[NSArchiver archivedDataWithRootObject:expense] forType:ExpensePBoardType];
     [pasteBoard setString:[expense description] forType:NSStringPboardType]; 

@@ -42,7 +42,7 @@
 	PreferencesController.h
 	ExpensePad
 	
-	Copyright (c) 2000-2005 Apple Computer. All rights reserved.
+	Copyright (c) 2000-2007 Apple Inc. All rights reserved.
 
 ************************************************************/
 

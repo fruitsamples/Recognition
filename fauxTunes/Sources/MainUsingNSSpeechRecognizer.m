@@ -41,7 +41,7 @@
 	MainUsingNSSpeechRecognizer.m
 	fauxTunes
 	
-	Copyright (c) 2001-2005 Apple Computer, Inc. All rights reserved.
+	Copyright (c) 2001-2007 Apple Inc. All rights reserved.
 */
 
 #import <Cocoa/Cocoa.h>
@@ -86,7 +86,7 @@ NSSpeechRecognizer *	gSpeechRecognizer	= NULL;
 
 - (void)speechRecognizer:(NSSpeechRecognizer *)sender didRecognizeCommand:(id)command
 {
-	[_fauxTunes performSelector:(SEL)[[gCommandsDictionary objectForKey:command] intValue]];
+	[_fauxTunes performSelector:(SEL)[[gCommandsDictionary objectForKey:command] longValue]];
 }
 
 @end
@@ -101,53 +101,53 @@ NSDictionary * CreateCommandsDictionary()
 
 	return [[NSDictionary alloc] initWithObjectsAndKeys:
 				// File Menu
-				[NSNumber numberWithInt:(int)@selector(fileMenuNewPlaylist:)], @"Make new playlist",
-				[NSNumber numberWithInt:(int)@selector(fileMenuNewPlaylistFromSelection:)], @"New playlist from selection",
-				[NSNumber numberWithInt:(int)@selector(fileMenuAddToLibrary:)], @"Add to library",
-				[NSNumber numberWithInt:(int)@selector(fileMenuHideOrShowWindow:)], @"Show fauxTunes Window",
-				[NSNumber numberWithInt:(int)@selector(fileMenuHideOrShowWindow:)], @"Hide fauxTunes Window",
-				[NSNumber numberWithInt:(int)@selector(fileMenuCloseWindow:)], @"Close this window",
-				[NSNumber numberWithInt:(int)@selector(fileMenuGetInfo:)], @"Get song info",
-				[NSNumber numberWithInt:(int)@selector(fileMenuShowSongFile:)], @"Show song file",
-				[NSNumber numberWithInt:(int)@selector(fileMenuShopForProducts:)], @"Shop for fauxTunes products",
+				[NSNumber numberWithLong:(long)@selector(fileMenuNewPlaylist:)], @"Make new playlist",
+				[NSNumber numberWithLong:(long)@selector(fileMenuNewPlaylistFromSelection:)], @"New playlist from selection",
+				[NSNumber numberWithLong:(long)@selector(fileMenuAddToLibrary:)], @"Add to library",
+				[NSNumber numberWithLong:(long)@selector(fileMenuHideOrShowWindow:)], @"Show fauxTunes Window",
+				[NSNumber numberWithLong:(long)@selector(fileMenuHideOrShowWindow:)], @"Hide fauxTunes Window",
+				[NSNumber numberWithLong:(long)@selector(fileMenuCloseWindow:)], @"Close this window",
+				[NSNumber numberWithLong:(long)@selector(fileMenuGetInfo:)], @"Get song info",
+				[NSNumber numberWithLong:(long)@selector(fileMenuShowSongFile:)], @"Show song file",
+				[NSNumber numberWithLong:(long)@selector(fileMenuShopForProducts:)], @"Shop for fauxTunes products",
 				// Edit Menu
-				[NSNumber numberWithInt:(int)@selector(editMenuUndo:)], @"Cancel last command",
-				[NSNumber numberWithInt:(int)@selector(editMenuCopy:)], @"Copy this to the clipboard",
-				[NSNumber numberWithInt:(int)@selector(editMenuPaste:)], @"Paste the clipboard here",
-				[NSNumber numberWithInt:(int)@selector(editMenuSelectAll:)], @"Select all songs",
-				[NSNumber numberWithInt:(int)@selector(editMenuSelectNone:)], @"Select none",
-				[NSNumber numberWithInt:(int)@selector(editMenuShowCurrentSong:)], @"Show current song",
-				[NSNumber numberWithInt:(int)@selector(editMenuViewOptions:)], @"Show view options",
+				[NSNumber numberWithLong:(long)@selector(editMenuUndo:)], @"Cancel last command",
+				[NSNumber numberWithLong:(long)@selector(editMenuCopy:)], @"Copy this to the clipboard",
+				[NSNumber numberWithLong:(long)@selector(editMenuPaste:)], @"Paste the clipboard here",
+				[NSNumber numberWithLong:(long)@selector(editMenuSelectAll:)], @"Select all songs",
+				[NSNumber numberWithLong:(long)@selector(editMenuSelectNone:)], @"Select none",
+				[NSNumber numberWithLong:(long)@selector(editMenuShowCurrentSong:)], @"Show current song",
+				[NSNumber numberWithLong:(long)@selector(editMenuViewOptions:)], @"Show view options",
 				// Controls Menu
-				[NSNumber numberWithInt:(int)@selector(controlsMenuPlayOrStopSong:)], @"Play this song",
-				[NSNumber numberWithInt:(int)@selector(controlsMenuPlayOrStopSong:)], @"Stop playing song",
-				[NSNumber numberWithInt:(int)@selector(controlsMenuNextSong:)], @"Go to next song",
-				[NSNumber numberWithInt:(int)@selector(controlsMenuPreviousSong:)], @"Go to previous song",
-				[NSNumber numberWithInt:(int)@selector(controlsMenuShuffle:)], @"Shuffle songs",
-				[NSNumber numberWithInt:(int)@selector(controlsMenuRepeatOff:)], @"Turn repeating off",
-				[NSNumber numberWithInt:(int)@selector(controlsMenuRepeatAll:)], @"Repeat all songs",
-				[NSNumber numberWithInt:(int)@selector(controlsMenuRepeatOne:)], @"Repeat one song",
-				[NSNumber numberWithInt:(int)@selector(controlsMenuVolumeUp:)],  @"Turn volume up",
-				[NSNumber numberWithInt:(int)@selector(controlsMenuVolumeDown:)], @"Turn volume down",
-				[NSNumber numberWithInt:(int)@selector(controlsMenuMute:)], @"Mute volume",
-				[NSNumber numberWithInt:(int)@selector(controlsMenuEjectCD:)], @"Eject the CD",
+				[NSNumber numberWithLong:(long)@selector(controlsMenuPlayOrStopSong:)], @"Play this song",
+				[NSNumber numberWithLong:(long)@selector(controlsMenuPlayOrStopSong:)], @"Stop playing song",
+				[NSNumber numberWithLong:(long)@selector(controlsMenuNextSong:)], @"Go to next song",
+				[NSNumber numberWithLong:(long)@selector(controlsMenuPreviousSong:)], @"Go to previous song",
+				[NSNumber numberWithLong:(long)@selector(controlsMenuShuffle:)], @"Shuffle songs",
+				[NSNumber numberWithLong:(long)@selector(controlsMenuRepeatOff:)], @"Turn repeating off",
+				[NSNumber numberWithLong:(long)@selector(controlsMenuRepeatAll:)], @"Repeat all songs",
+				[NSNumber numberWithLong:(long)@selector(controlsMenuRepeatOne:)], @"Repeat one song",
+				[NSNumber numberWithLong:(long)@selector(controlsMenuVolumeUp:)],  @"Turn volume up",
+				[NSNumber numberWithLong:(long)@selector(controlsMenuVolumeDown:)], @"Turn volume down",
+				[NSNumber numberWithLong:(long)@selector(controlsMenuMute:)], @"Mute volume",
+				[NSNumber numberWithLong:(long)@selector(controlsMenuEjectCD:)], @"Eject the CD",
 				// Visuals Menu
-				[NSNumber numberWithInt:(int)@selector(visualsMenuToggleVisuals:)], @"Display visual",
-				[NSNumber numberWithInt:(int)@selector(visualsMenuToggleVisuals:)], @"Turn visual off",
-				[NSNumber numberWithInt:(int)@selector(visualsMenuSmall:)], @"Show visual at small size",
-				[NSNumber numberWithInt:(int)@selector(visualsMenuMedium:)], @"Show visual at meduim size",
-				[NSNumber numberWithInt:(int)@selector(visualsMenuLarge:)], @"Show visual at large size",
-				[NSNumber numberWithInt:(int)@selector(visualsMenuFullScreen:)], @"Display full screen",
-				[NSNumber numberWithInt:(int)@selector(visualsMenuFullScreen:)], @"Turn full screen off",
+				[NSNumber numberWithLong:(long)@selector(visualsMenuToggleVisuals:)], @"Display visual",
+				[NSNumber numberWithLong:(long)@selector(visualsMenuToggleVisuals:)], @"Turn visual off",
+				[NSNumber numberWithLong:(long)@selector(visualsMenuSmall:)], @"Show visual at small size",
+				[NSNumber numberWithLong:(long)@selector(visualsMenuMedium:)], @"Show visual at meduim size",
+				[NSNumber numberWithLong:(long)@selector(visualsMenuLarge:)], @"Show visual at large size",
+				[NSNumber numberWithLong:(long)@selector(visualsMenuFullScreen:)], @"Display full screen",
+				[NSNumber numberWithLong:(long)@selector(visualsMenuFullScreen:)], @"Turn full screen off",
 				// Advanced Menu
-				[NSNumber numberWithInt:(int)@selector(advancedMenuOpenStream:)], @"Open stream",
-				[NSNumber numberWithInt:(int)@selector(advancedMenuConvertToMP3:)], @"Convert to MP3",
-				[NSNumber numberWithInt:(int)@selector(advancedMenuExportSongList:)], @"Export song list",
-				[NSNumber numberWithInt:(int)@selector(advancedMenuGetCDTrackNames:)], @"Get CD track names",
-				[NSNumber numberWithInt:(int)@selector(advancedMenuSubmitCDTrackNames:)], @"Submit CD track names",
-				[NSNumber numberWithInt:(int)@selector(visualsMenuFullScreen:)], @"Convert ID3 tags",
+				[NSNumber numberWithLong:(long)@selector(advancedMenuOpenStream:)], @"Open stream",
+				[NSNumber numberWithLong:(long)@selector(advancedMenuConvertToMP3:)], @"Convert to MP3",
+				[NSNumber numberWithLong:(long)@selector(advancedMenuExportSongList:)], @"Export song list",
+				[NSNumber numberWithLong:(long)@selector(advancedMenuGetCDTrackNames:)], @"Get CD track names",
+				[NSNumber numberWithLong:(long)@selector(advancedMenuSubmitCDTrackNames:)], @"Submit CD track names",
+				[NSNumber numberWithLong:(long)@selector(visualsMenuFullScreen:)], @"Convert ID3 tags",
 				// Help Menu
-				[NSNumber numberWithInt:(int)@selector(helpMenuGetHelp:)], @"Get help",
+				[NSNumber numberWithLong:(long)@selector(helpMenuGetHelp:)], @"Get help",
 		NULL];
 }
 

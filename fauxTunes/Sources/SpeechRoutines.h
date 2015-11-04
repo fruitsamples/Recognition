@@ -40,7 +40,7 @@
 
 	SpeechRoutines.h
 	
-	Copyright (c) 2001-2005 Apple Computer, Inc. All rights reserved.
+	Copyright (c) 2001-2007 Apple Inc. All rights reserved.
 */
 
 
@@ -51,5 +51,5 @@ Boolean SetupSpeechRecognition( SRRecognitionSystem	 * outSpeechRecognitionSyste
 
 Boolean AddCommands( SRRecognizer inSpeechRecognizer, SRLanguageModel inCommandsLangaugeModel, CFArrayRef inCommandNamesArray );
 
-Boolean ConvertAppleEventResultIntoCommandID( const AppleEvent *inAppleEvent, UInt32 * outCommandID );
+Boolean ConvertAppleEventResultIntoCommandID( const AppleEvent *inAppleEvent, long * outCommandID );
 
