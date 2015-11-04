@@ -1,0 +1,1991 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 38;
+	objects = {
+		043355C9FE30361CC02AAC07 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXRezBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+//040
+//041
+//042
+//043
+//044
+//080
+//081
+//082
+//083
+//084
+		080E96DCFE201CFB7F000001 = {
+			fileRef = 29B97318FDCFA39411CA2CEA;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		080E96DDFE201D6D7F000001 = {
+			children = (
+				F557975100A8A3AA01000001,
+				F557975200A8A3AA01000001,
+				F557976900A8A9FC01000001,
+			);
+			isa = PBXGroup;
+			name = "Common Classes";
+			refType = 4;
+		};
+//080
+//081
+//082
+//083
+//084
+//100
+//101
+//102
+//103
+//104
+		1058C7A0FEA54F0111CA2CBB = {
+			children = (
+				1058C7A1FEA54F0111CA2CBB,
+				F557975C00A8A61B01000001,
+			);
+			isa = PBXGroup;
+			name = "Linked Frameworks";
+			refType = 4;
+		};
+		1058C7A1FEA54F0111CA2CBB = {
+			isa = PBXFrameworkReference;
+			name = Cocoa.framework;
+			path = /System/Library/Frameworks/Cocoa.framework;
+			refType = 0;
+		};
+		1058C7A2FEA54F0111CA2CBB = {
+			children = (
+				29B97325FDCFA39411CA2CEA,
+				29B97324FDCFA39411CA2CEA,
+			);
+			isa = PBXGroup;
+			name = "Other Frameworks";
+			refType = 4;
+		};
+		1058C7A3FEA54F0111CA2CBB = {
+			fileRef = 1058C7A1FEA54F0111CA2CBB;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+//100
+//101
+//102
+//103
+//104
+//170
+//171
+//172
+//173
+//174
+		17587328FF379C6511CA2CBB = {
+			isa = PBXApplicationReference;
+			path = "fauxTunes (Carbon API).app";
+			refType = 3;
+		};
+//170
+//171
+//172
+//173
+//174
+//190
+//191
+//192
+//193
+//194
+		19C28FACFE9D520D11CA2CBB = {
+			children = (
+				17587328FF379C6511CA2CBB,
+				F557974900A8A34A01000001,
+				F5C273F902E3712801CA1584,
+				907EB6C6047B4F4100A4A196,
+			);
+			isa = PBXGroup;
+			name = Products;
+			refType = 4;
+		};
+//190
+//191
+//192
+//193
+//194
+//290
+//291
+//292
+//293
+//294
+		29B97313FDCFA39411CA2CEA = {
+			buildStyles = (
+				4A9504CCFFE6A4B311CA0CBA,
+				4A9504CDFFE6A4B311CA0CBA,
+			);
+			hasScannedForEncodings = 1;
+			isa = PBXProject;
+			mainGroup = 29B97314FDCFA39411CA2CEA;
+			projectDirPath = "";
+			targets = (
+				907EB6C5047B4F4100A4A196,
+				29B97326FDCFA39411CA2CEA,
+				F5C273F802E3712801CA1584,
+				F557974A00A8A34A01000001,
+			);
+		};
+		29B97314FDCFA39411CA2CEA = {
+			children = (
+				907EB6BE047B4E6400A4A196,
+				29B97315FDCFA39411CA2CEA,
+				F5C273FB02E3713901CA1584,
+				F51FE0C200AC94B601000001,
+				080E96DDFE201D6D7F000001,
+				29B97317FDCFA39411CA2CEA,
+				29B97323FDCFA39411CA2CEA,
+				19C28FACFE9D520D11CA2CBB,
+			);
+			isa = PBXGroup;
+			name = fauxTunes;
+			path = "";
+			refType = 4;
+		};
+		29B97315FDCFA39411CA2CEA = {
+			children = (
+				F557975700A8A61B01000001,
+				F557975B00A8A61B01000001,
+				F557974500A895B601000001,
+			);
+			isa = PBXGroup;
+			name = "fauxTunes (Carbon API) Sources";
+			path = "";
+			refType = 4;
+		};
+		29B97317FDCFA39411CA2CEA = {
+			children = (
+				F51FE0C300AC9CB101000001,
+				29B97318FDCFA39411CA2CEA,
+			);
+			isa = PBXGroup;
+			name = "Common Resources";
+			path = "";
+			refType = 4;
+		};
+		29B97318FDCFA39411CA2CEA = {
+			children = (
+				29B97319FDCFA39411CA2CEA,
+			);
+			isa = PBXVariantGroup;
+			name = MainMenu.nib;
+			path = "";
+			refType = 4;
+		};
+		29B97319FDCFA39411CA2CEA = {
+			isa = PBXFileReference;
+			name = English;
+			path = English.lproj/MainMenu.nib;
+			refType = 4;
+		};
+		29B97323FDCFA39411CA2CEA = {
+			children = (
+				1058C7A0FEA54F0111CA2CBB,
+				1058C7A2FEA54F0111CA2CBB,
+			);
+			isa = PBXGroup;
+			name = Frameworks;
+			path = "";
+			refType = 4;
+		};
+		29B97324FDCFA39411CA2CEA = {
+			isa = PBXFrameworkReference;
+			name = AppKit.framework;
+			path = /System/Library/Frameworks/AppKit.framework;
+			refType = 0;
+		};
+		29B97325FDCFA39411CA2CEA = {
+			isa = PBXFrameworkReference;
+			name = Foundation.framework;
+			path = /System/Library/Frameworks/Foundation.framework;
+			refType = 0;
+		};
+		29B97326FDCFA39411CA2CEA = {
+			buildPhases = (
+				29B97327FDCFA39411CA2CEA,
+				29B97328FDCFA39411CA2CEA,
+				29B9732BFDCFA39411CA2CEA,
+				29B9732DFDCFA39411CA2CEA,
+				043355C9FE30361CC02AAC07,
+			);
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "fauxTunes (Carbon API)";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+				WRAPPER_EXTENSION = app;
+			};
+			dependencies = (
+			);
+			isa = PBXApplicationTarget;
+			name = "fauxTunes (Carbon API)";
+			productInstallPath = "$(HOME)/Applications";
+			productName = fauxTunes;
+			productReference = 17587328FF379C6511CA2CBB;
+			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
+<plist version=\"1.0\">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>fauxTunes (Carbon API)</string>
+	<key>CFBundleIconFile</key>
+	<string></string>
+	<key>CFBundleIdentifier</key>
+	<string></string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>fauxTunes (Carbon API)</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0.0d1</string>
+	<key>CFBundleSignature</key>
+	<string>ftAI</string>
+	<key>CFBundleVersion</key>
+	<string>1.0.0d1</string>
+	<key>NSMainNibFile</key>
+	<string>MainMenu</string>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+</dict>
+</plist>
+";
+		};
+		29B97327FDCFA39411CA2CEA = {
+			buildActionMask = 2147483647;
+			files = (
+				F557975300A8A3AA01000001,
+				F557975D00A8A61B01000001,
+				F557976A00A8A9FC01000001,
+			);
+			isa = PBXHeadersBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		29B97328FDCFA39411CA2CEA = {
+			buildActionMask = 2147483647;
+			files = (
+				080E96DCFE201CFB7F000001,
+				F558C73D00B1B64F01000001,
+				F558C73E00B1B64F01000001,
+				F561CAF100B88BC501CA1585,
+				F561CAF200B88BC501CA1585,
+				F561CAF300B88BC501CA1585,
+				F593BC5C00B8914401CA1585,
+				F593BC5D00B8914401CA1585,
+				F593BC5E00B8914401CA1585,
+				F593BC5F00B8914401CA1585,
+				F593BC6000B8914401CA1585,
+				F593BC6700B895EC01CA1585,
+			);
+			isa = PBXResourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		29B9732BFDCFA39411CA2CEA = {
+			buildActionMask = 2147483647;
+			files = (
+				F557974600A895B601000001,
+				F557975400A8A3AA01000001,
+				F557975E00A8A61B01000001,
+			);
+			isa = PBXSourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		29B9732DFDCFA39411CA2CEA = {
+			buildActionMask = 2147483647;
+			files = (
+				1058C7A3FEA54F0111CA2CBB,
+				F557975F00A8A61B01000001,
+			);
+			isa = PBXFrameworksBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+//290
+//291
+//292
+//293
+//294
+//4A0
+//4A1
+//4A2
+//4A3
+//4A4
+		4A9504CCFFE6A4B311CA0CBA = {
+			buildRules = (
+			);
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				OPTIMIZATION_CFLAGS = "-O0";
+			};
+			isa = PBXBuildStyle;
+			name = Development;
+		};
+		4A9504CDFFE6A4B311CA0CBA = {
+			buildRules = (
+			);
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+			};
+			isa = PBXBuildStyle;
+			name = Deployment;
+		};
+//4A0
+//4A1
+//4A2
+//4A3
+//4A4
+//900
+//901
+//902
+//903
+//904
+		907EB6BE047B4E6400A4A196 = {
+			children = (
+				907EB6BF047B4F1C00A4A196,
+			);
+			isa = PBXGroup;
+			name = "fauxTunes (NSSpeechRecognizer) Sources";
+			refType = 4;
+		};
+		907EB6BF047B4F1C00A4A196 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = MainUsingNSSpeechRecognizer.m;
+			path = Sources/MainUsingNSSpeechRecognizer.m;
+			refType = 4;
+		};
+		907EB6C0047B4F4100A4A196 = {
+			buildActionMask = 2147483647;
+			files = (
+				907EB6CA047B4F7000A4A196,
+				907EB6CC047B4F7100A4A196,
+			);
+			isa = PBXHeadersBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		907EB6C1047B4F4100A4A196 = {
+			buildActionMask = 2147483647;
+			files = (
+				907EB6C9047B4F6F00A4A196,
+				907EB6CE047B5F7F00A4A196,
+				907EB6CF047B5F8000A4A196,
+				907EB6D0047B5F8000A4A196,
+				907EB6D1047B5F8100A4A196,
+				907EB6D2047B5F8200A4A196,
+				907EB6D3047B5F8200A4A196,
+				907EB6D4047B5F8300A4A196,
+				907EB6D5047B5F8300A4A196,
+				907EB6D6047B5F8400A4A196,
+				907EB6D7047B5F8500A4A196,
+				907EB6D8047B5F8600A4A196,
+			);
+			isa = PBXResourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		907EB6C2047B4F4100A4A196 = {
+			buildActionMask = 2147483647;
+			files = (
+				907EB6C8047B4F6900A4A196,
+				907EB6CB047B4F7000A4A196,
+			);
+			isa = PBXSourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		907EB6C3047B4F4100A4A196 = {
+			buildActionMask = 2147483647;
+			files = (
+				907EB6CD047B5D0B00A4A196,
+			);
+			isa = PBXFrameworksBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		907EB6C4047B4F4100A4A196 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXRezBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		907EB6C5047B4F4100A4A196 = {
+			buildPhases = (
+				907EB6C0047B4F4100A4A196,
+				907EB6C1047B4F4100A4A196,
+				907EB6C2047B4F4100A4A196,
+				907EB6C3047B4F4100A4A196,
+				907EB6C4047B4F4100A4A196,
+			);
+			buildSettings = {
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "fauxTunes (NSSpeechRecognizer)";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+				WRAPPER_EXTENSION = app;
+			};
+			dependencies = (
+			);
+			isa = PBXApplicationTarget;
+			name = "fauxTunes (NSSpeechRecognizer)";
+			productInstallPath = "$(USER_APPS_DIR)";
+			productName = "fauxTunes (NSSpeechRecognizer)";
+			productReference = 907EB6C6047B4F4100A4A196;
+			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
+<plist version=\"1.0\">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>fauxTunes (NSSpeechRecognizer)</string>
+	<key>CFBundleGetInfoString</key>
+	<string></string>
+	<key>CFBundleIconFile</key>
+	<string></string>
+	<key>CFBundleIdentifier</key>
+	<string></string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>fauxTunes (NSSpeechRecognizer)</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>1.0</string>
+	<key>NSMainNibFile</key>
+	<string>MainMenu</string>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+</dict>
+</plist>
+";
+		};
+		907EB6C6047B4F4100A4A196 = {
+			isa = PBXApplicationReference;
+			path = "fauxTunes (NSSpeechRecognizer).app";
+			refType = 3;
+		};
+		907EB6C8047B4F6900A4A196 = {
+			fileRef = 907EB6BF047B4F1C00A4A196;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		907EB6C9047B4F6F00A4A196 = {
+			fileRef = 29B97318FDCFA39411CA2CEA;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		907EB6CA047B4F7000A4A196 = {
+			fileRef = F557976900A8A9FC01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		907EB6CB047B4F7000A4A196 = {
+			fileRef = F557975200A8A3AA01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		907EB6CC047B4F7100A4A196 = {
+			fileRef = F557975100A8A3AA01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		907EB6CD047B5D0B00A4A196 = {
+			fileRef = 1058C7A1FEA54F0111CA2CBB;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		907EB6CE047B5F7F00A4A196 = {
+			fileRef = F593BC6600B895EC01CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		907EB6CF047B5F8000A4A196 = {
+			fileRef = F593BC5B00B8914401CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		907EB6D0047B5F8000A4A196 = {
+			fileRef = F593BC5A00B8914401CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		907EB6D1047B5F8100A4A196 = {
+			fileRef = F593BC5900B8914401CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		907EB6D2047B5F8200A4A196 = {
+			fileRef = F593BC5800B8914401CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		907EB6D3047B5F8200A4A196 = {
+			fileRef = F593BC5700B8914401CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		907EB6D4047B5F8300A4A196 = {
+			fileRef = F561CAF000B88BC501CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		907EB6D5047B5F8300A4A196 = {
+			fileRef = F561CAEF00B88BC501CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		907EB6D6047B5F8400A4A196 = {
+			fileRef = F561CAEE00B88BC501CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		907EB6D7047B5F8500A4A196 = {
+			fileRef = F558C73C00B1B64F01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		907EB6D8047B5F8600A4A196 = {
+			fileRef = F558C73B00B1B64F01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+//900
+//901
+//902
+//903
+//904
+//F50
+//F51
+//F52
+//F53
+//F54
+		F50128FF02E39BE901CA1584 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Display at full screen.SpeakableItemsCommand";
+			path = "Resources/EmbeddedItems/Display at full screen.SpeakableItemsCommand";
+			refType = 4;
+		};
+		F501290002E39BE901CA1584 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Display visual.SpeakableItemsCommand";
+			path = "Resources/EmbeddedItems/Display visual.SpeakableItemsCommand";
+			refType = 4;
+		};
+		F501290102E39BE901CA1584 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Eject the CD.SpeakableItemsCommand";
+			path = "Resources/EmbeddedItems/Eject the CD.SpeakableItemsCommand";
+			refType = 4;
+		};
+		F501290202E39BE901CA1584 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Get song info.SpeakableItemsCommand";
+			path = "Resources/EmbeddedItems/Get song info.SpeakableItemsCommand";
+			refType = 4;
+		};
+		F501290302E39BE901CA1584 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Hide fauxTunes window.SpeakableItemsCommand";
+			path = "Resources/EmbeddedItems/Hide fauxTunes window.SpeakableItemsCommand";
+			refType = 4;
+		};
+		F501290402E39BE901CA1584 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Make new playlist.SpeakableItemsCommand";
+			path = "Resources/EmbeddedItems/Make new playlist.SpeakableItemsCommand";
+			refType = 4;
+		};
+		F501290502E39BE901CA1584 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Mute volume.SpeakableItemsCommand";
+			path = "Resources/EmbeddedItems/Mute volume.SpeakableItemsCommand";
+			refType = 4;
+		};
+		F501290602E39BE901CA1584 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "New playlist from selection.SpeakableItemsCommand";
+			path = "Resources/EmbeddedItems/New playlist from selection.SpeakableItemsCommand";
+			refType = 4;
+		};
+		F501290702E39BE901CA1584 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Open stream.SpeakableItemsCommand";
+			path = "Resources/EmbeddedItems/Open stream.SpeakableItemsCommand";
+			refType = 4;
+		};
+		F501290802E39BE901CA1584 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Play this song.SpeakableItemsCommand";
+			path = "Resources/EmbeddedItems/Play this song.SpeakableItemsCommand";
+			refType = 4;
+		};
+		F501290902E39BE901CA1584 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Select all songs.SpeakableItemsCommand";
+			path = "Resources/EmbeddedItems/Select all songs.SpeakableItemsCommand";
+			refType = 4;
+		};
+		F501290A02E39BE901CA1584 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Select none.SpeakableItemsCommand";
+			path = "Resources/EmbeddedItems/Select none.SpeakableItemsCommand";
+			refType = 4;
+		};
+		F501290B02E39BE901CA1584 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Show current song.SpeakableItemsCommand";
+			path = "Resources/EmbeddedItems/Show current song.SpeakableItemsCommand";
+			refType = 4;
+		};
+		F501290C02E39BE901CA1584 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Show fauxTunes window.SpeakableItemsCommand";
+			path = "Resources/EmbeddedItems/Show fauxTunes window.SpeakableItemsCommand";
+			refType = 4;
+		};
+		F501290D02E39BE901CA1584 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Show song file.SpeakableItemsCommand";
+			path = "Resources/EmbeddedItems/Show song file.SpeakableItemsCommand";
+			refType = 4;
+		};
+		F501290E02E39BE901CA1584 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Stop playing song.SpeakableItemsCommand";
+			path = "Resources/EmbeddedItems/Stop playing song.SpeakableItemsCommand";
+			refType = 4;
+		};
+		F501290F02E39BE901CA1584 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Turn full screen off.SpeakableItemsCommand";
+			path = "Resources/EmbeddedItems/Turn full screen off.SpeakableItemsCommand";
+			refType = 4;
+		};
+		F501291002E39BE901CA1584 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Turn visual off.SpeakableItemsCommand";
+			path = "Resources/EmbeddedItems/Turn visual off.SpeakableItemsCommand";
+			refType = 4;
+		};
+		F501291102E39BE901CA1584 = {
+			fileRef = F50128FF02E39BE901CA1584;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F501291202E39BE901CA1584 = {
+			fileRef = F501290002E39BE901CA1584;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F501291302E39BE901CA1584 = {
+			fileRef = F501290102E39BE901CA1584;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F501291402E39BE901CA1584 = {
+			fileRef = F501290202E39BE901CA1584;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F501291502E39BE901CA1584 = {
+			fileRef = F501290302E39BE901CA1584;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F501291602E39BE901CA1584 = {
+			fileRef = F501290402E39BE901CA1584;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F501291702E39BE901CA1584 = {
+			fileRef = F501290502E39BE901CA1584;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F501291802E39BE901CA1584 = {
+			fileRef = F501290602E39BE901CA1584;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F501291902E39BE901CA1584 = {
+			fileRef = F501290702E39BE901CA1584;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F501291A02E39BE901CA1584 = {
+			fileRef = F501290802E39BE901CA1584;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F501291B02E39BE901CA1584 = {
+			fileRef = F501290902E39BE901CA1584;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F501291C02E39BE901CA1584 = {
+			fileRef = F501290A02E39BE901CA1584;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F501291D02E39BE901CA1584 = {
+			fileRef = F501290B02E39BE901CA1584;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F501291E02E39BE901CA1584 = {
+			fileRef = F501290C02E39BE901CA1584;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F501291F02E39BE901CA1584 = {
+			fileRef = F501290D02E39BE901CA1584;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F501292002E39BE901CA1584 = {
+			fileRef = F501290E02E39BE901CA1584;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F501292102E39BE901CA1584 = {
+			fileRef = F501290F02E39BE901CA1584;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F501292202E39BE901CA1584 = {
+			fileRef = F501291002E39BE901CA1584;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F51FE0C200AC94B601000001 = {
+			children = (
+				F557975800A8A61B01000001,
+				F557975A00A8A61B01000001,
+				F557975900A8A61B01000001,
+				F557976C00A8B27201000001,
+			);
+			isa = PBXGroup;
+			name = "fauxTunes (SI-Installed) Sources";
+			refType = 4;
+		};
+		F51FE0C300AC9CB101000001 = {
+			children = (
+				F558C73B00B1B64F01000001,
+				F558C73C00B1B64F01000001,
+				F561CAEE00B88BC501CA1585,
+				F561CAEF00B88BC501CA1585,
+				F561CAF000B88BC501CA1585,
+				F593BC5700B8914401CA1585,
+				F593BC5800B8914401CA1585,
+				F593BC5900B8914401CA1585,
+				F593BC5A00B8914401CA1585,
+				F593BC5B00B8914401CA1585,
+				F593BC6600B895EC01CA1585,
+			);
+			isa = PBXGroup;
+			name = Graphics;
+			refType = 4;
+		};
+		F557974500A895B601000001 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = SpeechRoutines.c;
+			path = Sources/SpeechRoutines.c;
+			refType = 4;
+		};
+		F557974600A895B601000001 = {
+			fileRef = F557974500A895B601000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F557974900A8A34A01000001 = {
+			isa = PBXApplicationReference;
+			path = "fauxTunes (SI).app";
+			refType = 3;
+		};
+		F557974A00A8A34A01000001 = {
+			buildPhases = (
+				F557974B00A8A34A01000001,
+				F557974C00A8A34A01000001,
+				F557974D00A8A34A01000001,
+				F557974E00A8A34A01000001,
+				F557974F00A8A34A01000001,
+				F557976D00A8B27201000001,
+				F5EB99F300B78E5401000001,
+			);
+			buildSettings = {
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "fauxTunes (SI)";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+				WRAPPER_EXTENSION = app;
+			};
+			dependencies = (
+			);
+			isa = PBXApplicationTarget;
+			name = "fauxTunes (SI-Installed)";
+			productInstallPath = "$(USER_APPS_DIR)";
+			productName = fauxTunesUsingSpeakableItems;
+			productReference = F557974900A8A34A01000001;
+			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
+<plist version=\"1.0\">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>fauxTunes (SI)</string>
+	<key>CFBundleGetInfoString</key>
+	<string></string>
+	<key>CFBundleIconFile</key>
+	<string></string>
+	<key>CFBundleIdentifier</key>
+	<string></string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>fauxTunes (SI)</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0.0d1</string>
+	<key>CFBundleSignature</key>
+	<string>ftSI</string>
+	<key>CFBundleVersion</key>
+	<string>1.1</string>
+	<key>NSMainNibFile</key>
+	<string>MainMenu</string>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+</dict>
+</plist>
+";
+		};
+		F557974B00A8A34A01000001 = {
+			buildActionMask = 2147483647;
+			files = (
+				F557975500A8A3AA01000001,
+				F557976100A8A61B01000001,
+				F557976B00A8A9FC01000001,
+			);
+			isa = PBXHeadersBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F557974C00A8A34A01000001 = {
+			buildActionMask = 2147483647;
+			files = (
+				F557977500A8BAA301000001,
+				F558C73F00B1B64F01000001,
+				F558C74000B1B64F01000001,
+				F561CAF400B88BC501CA1585,
+				F561CAF500B88BC501CA1585,
+				F561CAF600B88BC501CA1585,
+				F593BC6100B8914401CA1585,
+				F593BC6200B8914401CA1585,
+				F593BC6300B8914401CA1585,
+				F593BC6400B8914401CA1585,
+				F593BC6500B8914401CA1585,
+				F593BC6800B895EC01CA1585,
+			);
+			isa = PBXResourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F557974D00A8A34A01000001 = {
+			buildActionMask = 2147483647;
+			files = (
+				F557975600A8A3AA01000001,
+				F557976200A8A61B01000001,
+				F557976300A8A61B01000001,
+			);
+			isa = PBXSourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F557974E00A8A34A01000001 = {
+			buildActionMask = 2147483647;
+			files = (
+				F557977200A8B30501000001,
+				F557976400A8A61B01000001,
+			);
+			isa = PBXFrameworksBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F557974F00A8A34A01000001 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXRezBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F557975100A8A3AA01000001 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = FauxTunes.h;
+			path = Sources/FauxTunes.h;
+			refType = 4;
+		};
+		F557975200A8A3AA01000001 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = FauxTunes.m;
+			path = Sources/FauxTunes.m;
+			refType = 4;
+		};
+		F557975300A8A3AA01000001 = {
+			fileRef = F557975100A8A3AA01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F557975400A8A3AA01000001 = {
+			fileRef = F557975200A8A3AA01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F557975500A8A3AA01000001 = {
+			fileRef = F557975100A8A3AA01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F557975600A8A3AA01000001 = {
+			fileRef = F557975200A8A3AA01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F557975700A8A61B01000001 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = MainUsingSpeechAPI.m;
+			path = Sources/MainUsingSpeechAPI.m;
+			refType = 4;
+		};
+		F557975800A8A61B01000001 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = MainUsingSpeakableItems.m;
+			path = Sources/MainUsingSpeakableItems.m;
+			refType = 4;
+		};
+		F557975900A8A61B01000001 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = InstallSpeakableItems.c;
+			path = Sources/InstallSpeakableItems.c;
+			refType = 4;
+		};
+		F557975A00A8A61B01000001 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = InstallSpeakableItems.h;
+			path = Sources/InstallSpeakableItems.h;
+			refType = 4;
+		};
+		F557975B00A8A61B01000001 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = SpeechRoutines.h;
+			path = Sources/SpeechRoutines.h;
+			refType = 4;
+		};
+		F557975C00A8A61B01000001 = {
+			isa = PBXFrameworkReference;
+			name = Carbon.framework;
+			path = /System/Library/Frameworks/Carbon.framework;
+			refType = 0;
+		};
+		F557975D00A8A61B01000001 = {
+			fileRef = F557975B00A8A61B01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F557975E00A8A61B01000001 = {
+			fileRef = F557975700A8A61B01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F557975F00A8A61B01000001 = {
+			fileRef = F557975C00A8A61B01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F557976100A8A61B01000001 = {
+			fileRef = F557975A00A8A61B01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F557976200A8A61B01000001 = {
+			fileRef = F557975900A8A61B01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F557976300A8A61B01000001 = {
+			fileRef = F557975800A8A61B01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F557976400A8A61B01000001 = {
+			fileRef = F557975C00A8A61B01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F557976900A8A9FC01000001 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = Main.h;
+			path = Sources/Main.h;
+			refType = 4;
+		};
+		F557976A00A8A9FC01000001 = {
+			fileRef = F557976900A8A9FC01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F557976B00A8A9FC01000001 = {
+			fileRef = F557976900A8A9FC01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F557976C00A8B27201000001 = {
+			children = (
+				F557977300A8B79301000001,
+				F557977400A8B79301000001,
+			);
+			isa = PBXGroup;
+			name = "Speakable Items";
+			path = "";
+			refType = 4;
+		};
+		F557976D00A8B27201000001 = {
+			buildActionMask = 2147483647;
+			dstPath = CommandFiles;
+			dstSubfolderSpec = 7;
+			files = (
+				F5EB9A0700B798F301000001,
+				F5EB9A0800B798F301000001,
+				F5EB9A0900B798F301000001,
+				F5EB9A0A00B798F301000001,
+				F5EB9A0B00B798F301000001,
+				F5EB9A0C00B798F301000001,
+				F5EB9A0D00B798F301000001,
+				F5EB9A0E00B798F301000001,
+				F5EB9A0F00B798F301000001,
+				F5EB9A1000B798F301000001,
+				F5EB9A1100B798F301000001,
+				F5EB9A1200B798F301000001,
+				F5EB9A1300B798F301000001,
+				F5EB9A1400B798F301000001,
+				F5EB9A1500B798F301000001,
+				F5EB9A1600B798F301000001,
+				F5EB9A1700B798F301000001,
+				F5EB9A1800B798F301000001,
+			);
+			isa = PBXCopyFilesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F557977200A8B30501000001 = {
+			fileRef = 1058C7A1FEA54F0111CA2CBB;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F557977300A8B79301000001 = {
+			children = (
+				F5EB99F400B798F301000001,
+				F5EB99F500B798F301000001,
+				F5EB99F600B798F301000001,
+				F5EB99F700B798F301000001,
+				F5EB99F800B798F301000001,
+				F5EB99F900B798F301000001,
+				F5EB99FA00B798F301000001,
+				F5EB99FB00B798F301000001,
+				F5EB99FC00B798F301000001,
+				F5EB99FD00B798F301000001,
+				F5EB99FE00B798F301000001,
+				F5EB99FF00B798F301000001,
+				F5EB9A0000B798F301000001,
+				F5EB9A0100B798F301000001,
+				F5EB9A0200B798F301000001,
+				F5EB9A0300B798F301000001,
+				F5EB9A0400B798F301000001,
+				F5EB9A0500B798F301000001,
+			);
+			isa = PBXGroup;
+			name = CommandFiles;
+			refType = 4;
+		};
+		F557977400A8B79301000001 = {
+			children = (
+				F5EB9A0600B798F301000001,
+			);
+			isa = PBXGroup;
+			name = CompiledASDataFiles;
+			refType = 4;
+		};
+		F557977500A8BAA301000001 = {
+			fileRef = 29B97318FDCFA39411CA2CEA;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F558C73B00B1B64F01000001 = {
+			isa = PBXFileReference;
+			name = Forward.tif;
+			path = Resources/Graphics/Forward.tif;
+			refType = 4;
+		};
+		F558C73C00B1B64F01000001 = {
+			isa = PBXFileReference;
+			name = Reverse.tif;
+			path = Resources/Graphics/Reverse.tif;
+			refType = 4;
+		};
+		F558C73D00B1B64F01000001 = {
+			fileRef = F558C73B00B1B64F01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F558C73E00B1B64F01000001 = {
+			fileRef = F558C73C00B1B64F01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F558C73F00B1B64F01000001 = {
+			fileRef = F558C73B00B1B64F01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F558C74000B1B64F01000001 = {
+			fileRef = F558C73C00B1B64F01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F561CAEE00B88BC501CA1585 = {
+			isa = PBXFileReference;
+			name = GreenBkgrnd.tif;
+			path = Resources/Graphics/GreenBkgrnd.tif;
+			refType = 4;
+		};
+		F561CAEF00B88BC501CA1585 = {
+			isa = PBXFileReference;
+			name = SpeakerLoud.tif;
+			path = Resources/Graphics/SpeakerLoud.tif;
+			refType = 4;
+		};
+		F561CAF000B88BC501CA1585 = {
+			isa = PBXFileReference;
+			name = SpeakerSoft.tif;
+			path = Resources/Graphics/SpeakerSoft.tif;
+			refType = 4;
+		};
+		F561CAF100B88BC501CA1585 = {
+			fileRef = F561CAEE00B88BC501CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F561CAF200B88BC501CA1585 = {
+			fileRef = F561CAEF00B88BC501CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F561CAF300B88BC501CA1585 = {
+			fileRef = F561CAF000B88BC501CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F561CAF400B88BC501CA1585 = {
+			fileRef = F561CAEE00B88BC501CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F561CAF500B88BC501CA1585 = {
+			fileRef = F561CAEF00B88BC501CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F561CAF600B88BC501CA1585 = {
+			fileRef = F561CAF000B88BC501CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5937A0E02F9BAA101CA1584 = {
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+			);
+			isa = PBXCopyFilesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F593BC5700B8914401CA1585 = {
+			isa = PBXFileReference;
+			name = Eject.tif;
+			path = Resources/Graphics/Eject.tif;
+			refType = 4;
+		};
+		F593BC5800B8914401CA1585 = {
+			isa = PBXFileReference;
+			name = Play.tif;
+			path = Resources/Graphics/Play.tif;
+			refType = 4;
+		};
+		F593BC5900B8914401CA1585 = {
+			isa = PBXFileReference;
+			name = Repeat.tif;
+			path = Resources/Graphics/Repeat.tif;
+			refType = 4;
+		};
+		F593BC5A00B8914401CA1585 = {
+			isa = PBXFileReference;
+			name = Shuffle.tif;
+			path = Resources/Graphics/Shuffle.tif;
+			refType = 4;
+		};
+		F593BC5B00B8914401CA1585 = {
+			isa = PBXFileReference;
+			name = Visual.tif;
+			path = Resources/Graphics/Visual.tif;
+			refType = 4;
+		};
+		F593BC5C00B8914401CA1585 = {
+			fileRef = F593BC5700B8914401CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F593BC5D00B8914401CA1585 = {
+			fileRef = F593BC5800B8914401CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F593BC5E00B8914401CA1585 = {
+			fileRef = F593BC5900B8914401CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F593BC5F00B8914401CA1585 = {
+			fileRef = F593BC5A00B8914401CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F593BC6000B8914401CA1585 = {
+			fileRef = F593BC5B00B8914401CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F593BC6100B8914401CA1585 = {
+			fileRef = F593BC5700B8914401CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F593BC6200B8914401CA1585 = {
+			fileRef = F593BC5800B8914401CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F593BC6300B8914401CA1585 = {
+			fileRef = F593BC5900B8914401CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F593BC6400B8914401CA1585 = {
+			fileRef = F593BC5A00B8914401CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F593BC6500B8914401CA1585 = {
+			fileRef = F593BC5B00B8914401CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F593BC6600B895EC01CA1585 = {
+			isa = PBXFileReference;
+			name = NewPlaylist.tif;
+			path = Resources/Graphics/NewPlaylist.tif;
+			refType = 4;
+		};
+		F593BC6700B895EC01CA1585 = {
+			fileRef = F593BC6600B895EC01CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F593BC6800B895EC01CA1585 = {
+			fileRef = F593BC6600B895EC01CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5C273F302E3712801CA1584 = {
+			buildActionMask = 2147483647;
+			files = (
+				F5C273FC02E3717F01CA1584,
+				F5C273FE02E3718001CA1584,
+			);
+			isa = PBXHeadersBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F5C273F402E3712801CA1584 = {
+			buildActionMask = 2147483647;
+			files = (
+				F5C2740202E3825501CA1584,
+				F5C2742F02E38BAA01CA1584,
+				F5C2743002E38BAB01CA1584,
+				F5C2743102E38BAB01CA1584,
+				F5C2743202E38BAC01CA1584,
+				F5C2743302E38BAC01CA1584,
+				F5C2743402E38BAD01CA1584,
+				F5C2743502E38BAD01CA1584,
+				F5C2743602E38BAF01CA1584,
+				F5C2743702E38BAF01CA1584,
+				F5C2743802E38BAF01CA1584,
+				F5C2743902E38BB001CA1584,
+			);
+			isa = PBXResourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F5C273F502E3712801CA1584 = {
+			buildActionMask = 2147483647;
+			files = (
+				F5C273FD02E3717F01CA1584,
+				F5C2742B02E3836D01CA1584,
+			);
+			isa = PBXSourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F5C273F602E3712801CA1584 = {
+			buildActionMask = 2147483647;
+			files = (
+				F5C2742E02E38A6201CA1584,
+			);
+			isa = PBXFrameworksBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F5C273F702E3712801CA1584 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXRezBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F5C273F802E3712801CA1584 = {
+			buildPhases = (
+				F5C273F302E3712801CA1584,
+				F5C273F402E3712801CA1584,
+				F5C273F502E3712801CA1584,
+				F5C273F602E3712801CA1584,
+				F5C273F702E3712801CA1584,
+				F5C2740002E380FA01CA1584,
+				F5937A0E02F9BAA101CA1584,
+			);
+			buildSettings = {
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "fauxTunes (Embedded)";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+				WRAPPER_EXTENSION = app;
+			};
+			dependencies = (
+			);
+			isa = PBXApplicationTarget;
+			name = "fauxTunes (SI-Embedded)";
+			productInstallPath = "$(USER_APPS_DIR)";
+			productName = "fauxTunes (Embedded)";
+			productReference = F5C273F902E3712801CA1584;
+			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
+<plist version=\"1.0\">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>fauxTunes (Embedded)</string>
+	<key>CFBundleGetInfoString</key>
+	<string></string>
+	<key>CFBundleIconFile</key>
+	<string></string>
+	<key>CFBundleIdentifier</key>
+	<string></string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>fauxTunes (Embedded)</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.1</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>1.1</string>
+	<key>EmbeddedSpeakableItemsDirectory</key>
+	<string>SpeakableItems</string>
+	<key>NSMainNibFile</key>
+	<string>MainMenu</string>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+</dict>
+</plist>
+";
+		};
+		F5C273F902E3712801CA1584 = {
+			isa = PBXApplicationReference;
+			path = "fauxTunes (Embedded).app";
+			refType = 3;
+		};
+		F5C273FB02E3713901CA1584 = {
+			children = (
+				F5C2742A02E3836D01CA1584,
+				F5C2740102E381A801CA1584,
+			);
+			isa = PBXGroup;
+			name = "fauxTunes (SI-Embedded) Sources";
+			refType = 4;
+		};
+		F5C273FC02E3717F01CA1584 = {
+			fileRef = F557975100A8A3AA01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5C273FD02E3717F01CA1584 = {
+			fileRef = F557975200A8A3AA01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5C273FE02E3718001CA1584 = {
+			fileRef = F557976900A8A9FC01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5C2740002E380FA01CA1584 = {
+			buildActionMask = 2147483647;
+			dstPath = SpeakableItems;
+			dstSubfolderSpec = 7;
+			files = (
+				F5C2742002E3833B01CA1584,
+				F501291102E39BE901CA1584,
+				F501291202E39BE901CA1584,
+				F501291302E39BE901CA1584,
+				F501291402E39BE901CA1584,
+				F501291502E39BE901CA1584,
+				F501291602E39BE901CA1584,
+				F501291702E39BE901CA1584,
+				F501291802E39BE901CA1584,
+				F501291902E39BE901CA1584,
+				F501291A02E39BE901CA1584,
+				F501291B02E39BE901CA1584,
+				F501291C02E39BE901CA1584,
+				F501291D02E39BE901CA1584,
+				F501291E02E39BE901CA1584,
+				F501291F02E39BE901CA1584,
+				F501292002E39BE901CA1584,
+				F501292102E39BE901CA1584,
+				F501292202E39BE901CA1584,
+			);
+			isa = PBXCopyFilesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F5C2740102E381A801CA1584 = {
+			children = (
+				F5C2740D02E3833A01CA1584,
+				F50128FF02E39BE901CA1584,
+				F501290002E39BE901CA1584,
+				F501290102E39BE901CA1584,
+				F501290202E39BE901CA1584,
+				F501290302E39BE901CA1584,
+				F501290402E39BE901CA1584,
+				F501290502E39BE901CA1584,
+				F501290602E39BE901CA1584,
+				F501290702E39BE901CA1584,
+				F501290802E39BE901CA1584,
+				F501290902E39BE901CA1584,
+				F501290A02E39BE901CA1584,
+				F501290B02E39BE901CA1584,
+				F501290C02E39BE901CA1584,
+				F501290D02E39BE901CA1584,
+				F501290E02E39BE901CA1584,
+				F501290F02E39BE901CA1584,
+				F501291002E39BE901CA1584,
+			);
+			isa = PBXGroup;
+			name = "Speakable Items";
+			refType = 4;
+		};
+		F5C2740202E3825501CA1584 = {
+			fileRef = 29B97318FDCFA39411CA2CEA;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5C2740D02E3833A01CA1584 = {
+			isa = PBXFileReference;
+			name = "Quit fauxTunes.scpt";
+			path = "Resources/EmbeddedItems/Quit fauxTunes.scpt";
+			refType = 4;
+		};
+		F5C2742002E3833B01CA1584 = {
+			fileRef = F5C2740D02E3833A01CA1584;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5C2742A02E3836D01CA1584 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = MainUsingEmbeddedItems.m;
+			path = Sources/MainUsingEmbeddedItems.m;
+			refType = 4;
+		};
+		F5C2742B02E3836D01CA1584 = {
+			fileRef = F5C2742A02E3836D01CA1584;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5C2742E02E38A6201CA1584 = {
+			fileRef = 1058C7A1FEA54F0111CA2CBB;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5C2742F02E38BAA01CA1584 = {
+			fileRef = F593BC6600B895EC01CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5C2743002E38BAB01CA1584 = {
+			fileRef = F593BC5B00B8914401CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5C2743102E38BAB01CA1584 = {
+			fileRef = F593BC5A00B8914401CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5C2743202E38BAC01CA1584 = {
+			fileRef = F593BC5900B8914401CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5C2743302E38BAC01CA1584 = {
+			fileRef = F593BC5800B8914401CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5C2743402E38BAD01CA1584 = {
+			fileRef = F593BC5700B8914401CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5C2743502E38BAD01CA1584 = {
+			fileRef = F561CAF000B88BC501CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5C2743602E38BAF01CA1584 = {
+			fileRef = F561CAEF00B88BC501CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5C2743702E38BAF01CA1584 = {
+			fileRef = F561CAEE00B88BC501CA1585;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5C2743802E38BAF01CA1584 = {
+			fileRef = F558C73C00B1B64F01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5C2743902E38BB001CA1584 = {
+			fileRef = F558C73B00B1B64F01000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5EB99F300B78E5401000001 = {
+			buildActionMask = 2147483647;
+			dstPath = AppleScriptDataFiles;
+			dstSubfolderSpec = 7;
+			files = (
+				F5EB9A1900B798F301000001,
+			);
+			isa = PBXCopyFilesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F5EB99F400B798F301000001 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Display at full screen";
+			path = "Resources/SpeakableItems/CommandFiles/Display at full screen";
+			refType = 4;
+		};
+		F5EB99F500B798F301000001 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Display visual";
+			path = "Resources/SpeakableItems/CommandFiles/Display visual";
+			refType = 4;
+		};
+		F5EB99F600B798F301000001 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Eject the CD";
+			path = "Resources/SpeakableItems/CommandFiles/Eject the CD";
+			refType = 4;
+		};
+		F5EB99F700B798F301000001 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Get song info";
+			path = "Resources/SpeakableItems/CommandFiles/Get song info";
+			refType = 4;
+		};
+		F5EB99F800B798F301000001 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Hide fauxTunes window";
+			path = "Resources/SpeakableItems/CommandFiles/Hide fauxTunes window";
+			refType = 4;
+		};
+		F5EB99F900B798F301000001 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Make new playlist";
+			path = "Resources/SpeakableItems/CommandFiles/Make new playlist";
+			refType = 4;
+		};
+		F5EB99FA00B798F301000001 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Mute volume";
+			path = "Resources/SpeakableItems/CommandFiles/Mute volume";
+			refType = 4;
+		};
+		F5EB99FB00B798F301000001 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "New playlist from selection";
+			path = "Resources/SpeakableItems/CommandFiles/New playlist from selection";
+			refType = 4;
+		};
+		F5EB99FC00B798F301000001 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Open stream";
+			path = "Resources/SpeakableItems/CommandFiles/Open stream";
+			refType = 4;
+		};
+		F5EB99FD00B798F301000001 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Play this song";
+			path = "Resources/SpeakableItems/CommandFiles/Play this song";
+			refType = 4;
+		};
+		F5EB99FE00B798F301000001 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Select all songs";
+			path = "Resources/SpeakableItems/CommandFiles/Select all songs";
+			refType = 4;
+		};
+		F5EB99FF00B798F301000001 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Select none";
+			path = "Resources/SpeakableItems/CommandFiles/Select none";
+			refType = 4;
+		};
+		F5EB9A0000B798F301000001 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Show current song";
+			path = "Resources/SpeakableItems/CommandFiles/Show current song";
+			refType = 4;
+		};
+		F5EB9A0100B798F301000001 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Show fauxTunes window";
+			path = "Resources/SpeakableItems/CommandFiles/Show fauxTunes window";
+			refType = 4;
+		};
+		F5EB9A0200B798F301000001 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Show song file";
+			path = "Resources/SpeakableItems/CommandFiles/Show song file";
+			refType = 4;
+		};
+		F5EB9A0300B798F301000001 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Stop playing song";
+			path = "Resources/SpeakableItems/CommandFiles/Stop playing song";
+			refType = 4;
+		};
+		F5EB9A0400B798F301000001 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Turn full screen off";
+			path = "Resources/SpeakableItems/CommandFiles/Turn full screen off";
+			refType = 4;
+		};
+		F5EB9A0500B798F301000001 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = "Turn visual off";
+			path = "Resources/SpeakableItems/CommandFiles/Turn visual off";
+			refType = 4;
+		};
+		F5EB9A0600B798F301000001 = {
+			isa = PBXFileReference;
+			name = "Quit fauxTunes";
+			path = "Resources/SpeakableItems/CompiledASDataFiles/Quit fauxTunes";
+			refType = 4;
+		};
+		F5EB9A0700B798F301000001 = {
+			fileRef = F5EB99F400B798F301000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5EB9A0800B798F301000001 = {
+			fileRef = F5EB99F500B798F301000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5EB9A0900B798F301000001 = {
+			fileRef = F5EB99F600B798F301000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5EB9A0A00B798F301000001 = {
+			fileRef = F5EB99F700B798F301000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5EB9A0B00B798F301000001 = {
+			fileRef = F5EB99F800B798F301000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5EB9A0C00B798F301000001 = {
+			fileRef = F5EB99F900B798F301000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5EB9A0D00B798F301000001 = {
+			fileRef = F5EB99FA00B798F301000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5EB9A0E00B798F301000001 = {
+			fileRef = F5EB99FB00B798F301000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5EB9A0F00B798F301000001 = {
+			fileRef = F5EB99FC00B798F301000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5EB9A1000B798F301000001 = {
+			fileRef = F5EB99FD00B798F301000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5EB9A1100B798F301000001 = {
+			fileRef = F5EB99FE00B798F301000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5EB9A1200B798F301000001 = {
+			fileRef = F5EB99FF00B798F301000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5EB9A1300B798F301000001 = {
+			fileRef = F5EB9A0000B798F301000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5EB9A1400B798F301000001 = {
+			fileRef = F5EB9A0100B798F301000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5EB9A1500B798F301000001 = {
+			fileRef = F5EB9A0200B798F301000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5EB9A1600B798F301000001 = {
+			fileRef = F5EB9A0300B798F301000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5EB9A1700B798F301000001 = {
+			fileRef = F5EB9A0400B798F301000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5EB9A1800B798F301000001 = {
+			fileRef = F5EB9A0500B798F301000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5EB9A1900B798F301000001 = {
+			fileRef = F5EB9A0600B798F301000001;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA;
+}
